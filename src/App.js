@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-     
+     <p>lorem namei kadf raj and to be the king of pirate and became the greatest swardmen</p>
      <CircularProgress />
     </div>
   );
