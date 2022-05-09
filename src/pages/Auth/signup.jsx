@@ -19,6 +19,7 @@ const darkTheme = createTheme({
     mode: "dark",
   },
 });
+const theme = createTheme();
 
 export const Signup = () => {
   const handleSubmit = (event) => {
@@ -99,8 +100,7 @@ export const Signup = () => {
               <Grid item xs>
                 <Box
                   sx={{
-                    color: "white",
-                    fontSize: ".8rem",
+                    color: "#1976d2",
                     cursor: "pointer",
                     textDecoration: "underline",
                   }}
@@ -112,8 +112,7 @@ export const Signup = () => {
                 <Link to="/login">
                   <Box
                     sx={{
-                      color: "white",
-                      fontSize: ".8rem",
+                      color: "#1976d2",
                       cursor: "pointer",
                       textDecoration: "underline",
                     }}
