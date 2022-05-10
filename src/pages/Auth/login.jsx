@@ -37,8 +37,8 @@ export const Login = () => {
       })
       console.log('user',user)
       console.log('session',session);
+      console.log('error',error);
 
-      console.log('error',error)
     } catch (error) {
       console.error('something went wrong')
     }finally{
@@ -62,7 +62,7 @@ export const Login = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Log In
           </Typography>
           <Box
             component="form"
