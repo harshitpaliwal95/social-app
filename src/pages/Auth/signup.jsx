@@ -124,7 +124,7 @@ export const Signup = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Link to="/login">
+                <Link to="/">
                   <Box
                     sx={{
                       color: "#1976d2",
