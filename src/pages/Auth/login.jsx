@@ -11,8 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { supabase } from "../../supabaseClient";
+import { loginHandleSubmit } from ".";
 import { Link } from "react-router-dom";
+
 
 const darkTheme = createTheme({
   palette: {
@@ -20,31 +21,8 @@ const darkTheme = createTheme({
   },
 });
 
-
-
-
-
 export const Login = () => {
-
   
-  const handleSubmit = async(event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    try {
-      const { user, session, error } = await supabase.auth.signIn({
-        email: data.get("email"),
-        password: data.get("password"),
-      })
-      console.log('user',user)
-      console.log('session',session);
-      console.log('error',error);
-
-    } catch (error) {
-      console.error('something went wrong')
-    }finally{
-      console.log('all went well')
-    }
-  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -66,7 +44,7 @@ export const Login = () => {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={loginHandleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -119,8 +97,8 @@ export const Login = () => {
                   <Box
                     sx={{
                       color: "#1976d2",
-                    cursor: "pointer",
-                    textDecoration: "underline",
+                      cursor: "pointer",
+                      textDecoration: "underline",
                     }}
                   >
                     Don't have an account? Sign Up

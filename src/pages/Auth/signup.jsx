@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { supabase } from "../../supabaseClient";
+import { SignupHandleSubmit } from ".";
 import { Link } from "react-router-dom";
 
 const darkTheme = createTheme({
@@ -21,31 +21,7 @@ const darkTheme = createTheme({
 });
 
 export const Signup = () => {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    try {
-      const { user, session, error } = await supabase.auth.signUp({
-        email: data.get("email"),
-        password: data.get("password"),
-      },{
-        data: { 
-          user_name: data.get('name')
-        }
-      });
-      console.log("user", user);
-      console.log("session", session);
-      console.log("error", error);
-      if(error.status === 422){
-        console.log('password length should be more than 6 char');
-      }
-    } catch (error) {
-      console.error("something went wrong",error);
-    } finally {
-      console.log("all went well");
-    }
-  };
-
+ 
   return (
     <ThemeProvider theme={darkTheme}>
       <Container component="main" maxWidth="xs">
@@ -66,7 +42,7 @@ export const Signup = () => {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={SignupHandleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
