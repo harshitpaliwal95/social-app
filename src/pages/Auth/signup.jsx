@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./auth.css";
+import { supabase } from "../../supabaseClient";
 import { Link } from "react-router-dom";
 
 const darkTheme = createTheme({
@@ -19,16 +19,35 @@ const darkTheme = createTheme({
     mode: "dark",
   },
 });
-const theme = createTheme();
+
 
 export const Signup = () => {
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     email: data.get("email"),
+  //     password: data.get("password"),
+  //   });
+  // };
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      const { user, session, error } = await supabase.auth.signUp({
+        email: data.get("email"),
+        password: data.get("password"),
+      })
+      console.log('user',user)
+      console.log('session',session);
+
+      console.log('error',error)
+    } catch (error) {
+      console.error('something went wrong')
+    }finally{
+      console.log('all went well')
+    }
   };
 
   return (
