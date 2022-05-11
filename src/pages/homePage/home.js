@@ -1,8 +1,9 @@
 import React from "react";
-import { Navbar } from "../../components";
+import { Navbar, SideBar } from "../../components";
 
 export const Home = () => {
-  return <div>
+  return <React.Fragment>
     <Navbar/>
-  </div>;
+ <SideBar/>
+  </React.Fragment>;
 };

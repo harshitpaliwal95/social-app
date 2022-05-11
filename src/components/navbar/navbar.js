@@ -8,15 +8,14 @@ export const Navbar = () => {
     <Box
       sx={{
         display: "flex",
-        padding: { md: ".8rem 3rem", xs: ".4rem 2rem" },
+        padding: { md: ".8rem 3rem", xs: ".4rem 1rem" },
         justifyContent: "space-between",
       }}
     >
-      <Box sx={{ marginTop: ".9rem", display: "flex", alignItems: "center" }}>
+      <Box sx={{ marginTop: ".9rem", display: "flex", alignItems: "center", color:'#1d9bf0' }}>
         <AdbIcon />
         <Typography
           variant="subtitle1"
-          component="subtitle1"
           sx={{
             marginLeft: ".5rem",
             display: {
