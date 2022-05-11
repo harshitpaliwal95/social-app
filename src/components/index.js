@@ -1,2 +1,3 @@
 export { Navbar } from "./navbar/navbar";
-export {SideBar} from './sidebarComp/sideBar'
+export {LeftSideBar} from './sidebarComp/leftsideBar'
+export {RightSideBar} from './sidebarComp/rightSideBar'

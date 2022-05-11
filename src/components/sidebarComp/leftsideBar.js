@@ -5,10 +5,10 @@ import {
   HomeOutlined,
   NotificationsOutlined,
 } from "@mui/icons-material";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 
-export const SideBar = () => {
+export const LeftSideBar = () => {
   return (
     <Box
       sx={{
@@ -17,6 +17,10 @@ export const SideBar = () => {
         borderRight: ".1px solid gray",
         position: "fixed",
         height: "90vh",
+        width:{
+          md:'unset',
+          xs:'60px'
+        }
       }}
     >
       <Box
@@ -124,23 +128,20 @@ export const SideBar = () => {
           Profile
         </Typography>
       </Box>
-      <Box
+      <Button variant="outlined"
         sx={{
-          cursor: "pointer",
-          border: "1px solid gray",
-          borderRadius: "50px",
           margin: "18rem auto",
-          width: "5rem",
-          display: "flex",
-          alignItems: "center",
-          padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
+          visibility: {
+            md: "unset",
+            xs: "hidden",
+          },
         }}
       >
         <Avatar
           sx={{
             width: 26,
             height: 26,
-            bgcolor: "black",
+            bgcolor: "#1d9bf0",
             fontSize: ".8rem",
             marginRight: ".6rem",
           }}
@@ -150,7 +151,7 @@ export const SideBar = () => {
         <Box>
           <Typography variant="subtitle1">Logout</Typography>
         </Box>
-      </Box>
+      </Button>
     </Box>
   );
 };

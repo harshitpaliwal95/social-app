@@ -5,9 +5,11 @@ import AdbIcon from "@mui/icons-material/Adb";
 
 export const Navbar = () => {
   return (
+    
     <Box
       sx={{
         display: "flex",
+        backgroundColor:"inherit",
         padding: { md: ".8rem 3rem", xs: ".4rem 1rem" },
         justifyContent: "space-between",
       }}

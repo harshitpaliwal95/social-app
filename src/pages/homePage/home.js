@@ -1,9 +1,12 @@
-import React from "react";
-import { Navbar, SideBar } from "../../components";
+import { Box } from "@mui/material";
+import{ React} from "react";
+import { Navbar, LeftSideBar, RightSideBar } from "../../components";
+
 
 export const Home = () => {
-  return <React.Fragment>
+  return <Box>
     <Navbar/>
- <SideBar/>
-  </React.Fragment>;
+ <LeftSideBar/>
+ <RightSideBar/>
+  </Box>;
 };
