@@ -7,20 +7,28 @@ import {
 } from "@mui/icons-material";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 export const LeftSideBar = () => {
+  const location = useLocation();
+  const pathName = location.pathname;
+
   return (
     <Box
       sx={{
+        visibility:
+          pathName === "/login" || pathName === "/signup"
+            ? "hidden"
+            : "visible",
         display: "flex",
         flexDirection: "column",
         borderRight: ".1px solid gray",
         position: "fixed",
         height: "90vh",
-        width:{
-          md:'unset',
-          xs:'60px'
-        }
+        width: {
+          md: "unset",
+          xs: "60px",
+        },
       }}
     >
       <Box
@@ -128,7 +136,8 @@ export const LeftSideBar = () => {
           Profile
         </Typography>
       </Box>
-      <Button variant="outlined"
+      <Button
+        variant="outlined"
         sx={{
           margin: "18rem auto",
           visibility: {

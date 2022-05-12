@@ -5,8 +5,6 @@ import { Navbar, LeftSideBar, RightSideBar } from "../../components";
 
 export const Home = () => {
   return <Box>
-    <Navbar/>
- <LeftSideBar/>
- <RightSideBar/>
+    
   </Box>;
 };
