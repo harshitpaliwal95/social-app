@@ -34,7 +34,7 @@ export const CreateNewPost = () => {
         </Box>
         <Box sx={{ marginRight: "4rem", float: "right" }}>
           <Button variant="contained" endIcon={<SendIcon />}>
-            Send
+            Post
           </Button>
         </Box>
       </Box>
