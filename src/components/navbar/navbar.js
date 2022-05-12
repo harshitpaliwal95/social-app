@@ -9,7 +9,7 @@ export const Navbar = () => {
   const pathName = location.pathname;
 
   return (
-    <Box sx={{ position: "fixed", top: "0", width: "100%" }}>
+    <Box sx={{ position: "fixed", top: "0", width: "100vw" }}>
       <Box
         sx={{
           display: "flex",

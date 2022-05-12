@@ -14,7 +14,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { BookmarkBorderOutlined } from "@mui/icons-material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
-
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -34,7 +33,12 @@ export const PostCard = () => {
   };
 
   return (
-    <Card sx={{ maxWidth: 650, margin: "1rem 0rem" }}>
+    <Card
+      sx={{
+        margin: "1rem 0rem",
+        width: { xs: "20rem", sm: "40rem", md: 650, xl: 800 },
+      }}
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe">

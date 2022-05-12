@@ -8,7 +8,12 @@ export const CreateNewPost = () => {
     <Box>
       <Box
         sx={{
-          width: "40rem",
+          width: {
+            xs: "20rem",
+            sm:'40rem',
+            md: "40rem",
+            xl: "50rem",
+          },
           height: "12.5rem",
           bgcolor: "#fff",
           marginTop: ".4rem",
@@ -16,7 +21,15 @@ export const CreateNewPost = () => {
           borderRadius: "10px",
         }}
       >
-        <Box sx={{ display: "flex", marginLeft: "2rem" }}>
+        <Box
+          sx={{
+            display: "flex",
+            marginLeft: {
+              xs: "0rem",
+              md: "2rem",
+            },
+          }}
+        >
           <Avatar sx={{ bgcolor: "#1d9bf0", marginRight: ".4rem" }}>H</Avatar>
           <TextField
             placeholder="Whats your thought"
@@ -32,7 +45,7 @@ export const CreateNewPost = () => {
             }}
           ></TextField>
         </Box>
-        <Box sx={{ marginRight: "4rem", float: "right" }}>
+        <Box sx={{ marginRight:{xs:'0rem',md: "4rem"}, float: "right" }}>
           <Button variant="contained" endIcon={<SendIcon />}>
             Post
           </Button>
