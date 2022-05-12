@@ -24,11 +24,13 @@ export const RightSideBar = () => {
         position: "absolute",
         right: "20px",
         width: "16rem",
+        marginTop: "4.8rem",
         borderRadius: "20px",
         display: {
           md: "unset",
           xs: "none",
         },
+        zIndex: "-11",
       }}
     >
       <Box>

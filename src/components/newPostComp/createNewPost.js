@@ -3,7 +3,7 @@ import { Avatar, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
 
-export const NewPost = () => {
+export const CreateNewPost = () => {
   return (
     <Box>
       <Box

@@ -21,6 +21,7 @@ export const LeftSideBar = () => {
             ? "hidden"
             : "visible",
         display: "flex",
+        marginTop: "4.8rem",
         flexDirection: "column",
         borderRight: ".1px solid gray",
         position: "fixed",
@@ -139,7 +140,7 @@ export const LeftSideBar = () => {
       <Button
         variant="outlined"
         sx={{
-          margin: "18rem auto",
+          margin: "20rem auto",
           visibility: {
             md: "unset",
             xs: "hidden",
