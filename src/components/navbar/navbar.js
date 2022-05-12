@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 export const Navbar = () => {
   const location = useLocation();
   const pathName = location.pathname;
-  
+
 
   return (
     <Box
@@ -20,6 +20,7 @@ export const Navbar = () => {
         backgroundColor: "inherit",
         padding: { md: ".8rem 3rem", xs: ".4rem 1rem" },
         justifyContent: "space-between",
+        backgroundColor:'#ffff'
       }}
     >
       <Box
