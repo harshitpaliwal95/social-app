@@ -38,7 +38,6 @@ export const CreateNewPost = () => {
             rows={4}
             sx={{
               width: "25ch",
-
               height: "9rem",
               border: "none",
               alignItems: "flex-start",

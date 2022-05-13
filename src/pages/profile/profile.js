@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import { PostCard } from "../../components";
+import { EditProfileModel, PostCard } from "../../components";
 
 export const Profile = () => {
   return (
@@ -40,7 +40,7 @@ export const Profile = () => {
           like to ideate and build products by leveraging my problem-solving &
           programming skills.
         </Typography>
-        
+        <EditProfileModel/>
         <Box sx={{ width: "100%" }}>
           <Typography variant="h6" mt={4}>
             Your post
