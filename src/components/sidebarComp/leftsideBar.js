@@ -6,7 +6,6 @@ import {
   NotificationsOutlined,
 } from "@mui/icons-material";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import React from "react";
 import { useLocation } from "react-router-dom";
 
 export const LeftSideBar = () => {
