@@ -1,11 +1,26 @@
-:root{
-    --gray-color : #242d34;
+:root {
+  --gray-color: #242d34;
 }
-*{
-    border: 0;
-    margin: 0;
-   padding: 0;
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
-body{
-    font-family: 'Roboto', sans-serif;
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f7f7f7;
+}
+
+
+#post{
+  width: 30rem;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 75%;
+  }
+  #post{
+    width: 15rem;
+  }
 }
