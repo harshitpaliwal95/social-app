@@ -6,7 +6,22 @@ import {
   NotificationsOutlined,
 } from "@mui/icons-material";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+const style = {
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  color: "black",
+  padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
+};
+const typoStyle = {
+  marginLeft: ".4rem",
+  display: {
+    md: "unset",
+    xs: "none",
+  },
+};
 
 export const LeftSideBar = () => {
   const location = useLocation();
@@ -31,115 +46,42 @@ export const LeftSideBar = () => {
         },
       }}
     >
-      <Box
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
-        }}
-      >
-        <HomeOutlined />
-        <Typography
-          sx={{
-            marginLeft: ".4rem",
-            display: {
-              md: "unset",
-              xs: "none",
-            },
-          }}
-        >
-          Home
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
-        }}
-      >
-        <ExploreOutlined />
-        <Typography
-          sx={{
-            marginLeft: ".4rem",
-            display: {
-              md: "unset",
-              xs: "none",
-            },
-          }}
-        >
-          Explore
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
-        }}
-      >
-        <NotificationsOutlined />
-        <Typography
-          sx={{
-            marginLeft: ".4rem",
-            display: {
-              md: "unset",
-              xs: "none",
-            },
-          }}
-        >
-          Notification
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
-        }}
-      >
-        <BookmarkBorderOutlined />
-        <Typography
-          sx={{
-            marginLeft: ".4rem",
-            display: {
-              md: "unset",
-              xs: "none",
-            },
-          }}
-        >
-          Bookmark
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          padding: { md: ".8rem 3rem", xs: ".6rem 1rem" },
-        }}
-      >
-        <AccountCircleOutlined />
-        <Typography
-          sx={{
-            marginLeft: ".4rem",
-            display: {
-              md: "unset",
-              xs: "none",
-            },
-          }}
-        >
-          Profile
-        </Typography>
-      </Box>
+      <Link to="/">
+        <Box sx={style}>
+          <HomeOutlined />
+          <Typography sx={typoStyle}>Home</Typography>
+        </Box>
+      </Link>
+      <Link to="/explore">
+        <Box sx={style}>
+          <ExploreOutlined />
+          <Typography sx={typoStyle}>Explore</Typography>
+        </Box>
+      </Link>
+      <Link to="notification">
+        <Box sx={style}>
+          <NotificationsOutlined />
+          <Typography sx={typoStyle}>Notification</Typography>
+        </Box>
+      </Link>
+      <Link to="/bookmark">
+        <Box sx={style}>
+          <BookmarkBorderOutlined />
+          <Typography sx={typoStyle}>Bookmark</Typography>
+        </Box>
+      </Link>
+      <Link to="/profile">
+        <Box sx={style}>
+          <AccountCircleOutlined />
+          <Typography sx={typoStyle}>Profile</Typography>
+        </Box>
+      </Link>
       <Button
         variant="outlined"
         sx={{
-          margin: "20rem auto",
+          marginInline: "auto",
+          marginTop: "auto",
+          marginBottom: "2rem",
           visibility: {
             md: "unset",
             xs: "hidden",

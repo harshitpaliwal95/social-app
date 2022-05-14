@@ -35,19 +35,20 @@ export const Profile = () => {
         <Typography mt={0} sx={{ fontSize: ".7rem" }}>
           @harshitpaliwal
         </Typography>
+        <Typography>3 post | 30 Followers</Typography>
         <Typography mt={4} sx={{ textAlign: "center" }}>
           I'm a developer skilled in JavaScript, React, and Web technologies. I
           like to ideate and build products by leveraging my problem-solving &
           programming skills.
         </Typography>
-        <EditProfileModel/>
+        <EditProfileModel />
         <Box sx={{ width: "100%" }}>
           <Typography variant="h6" mt={4}>
             Your post
           </Typography>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
+          <PostCard />
+          <PostCard />
+          <PostCard />
         </Box>
       </Box>
     </Box>

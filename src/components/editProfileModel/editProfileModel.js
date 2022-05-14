@@ -4,6 +4,24 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+
+const Input = styled("input")({
+  display: "none",
+});
+
+const UploadButtons = () => {
+  return (
+    <label htmlFor="icon-button-file">
+      <Input accept="image/*" id="icon-button-file" type="file" />
+      <IconButton color="primary" aria-label="upload picture" component="span">
+        <PhotoCamera />
+      </IconButton>
+    </label>
+  );
+};
 
 const style = {
   position: "absolute",
@@ -22,7 +40,7 @@ export const EditProfileModel = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <Box>
       <Button
         onClick={handleOpen}
         variant="outlined"
@@ -37,23 +55,37 @@ export const EditProfileModel = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="subtitle1" >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              margin: "10px 0",
+            }}
+          >
+            <Typography>Upload Avtar</Typography>
+            <UploadButtons />
+          </Box>
+
+          <Typography id="modal-modal-title" variant="subtitle1">
             Edit your Bio
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
-            id='edit-bio-input'
+            id="edit-bio-input"
             multiline
             rows={3}
             sx={{
               height: "9rem",
               border: "none",
-              marginTop:'5px'
+              marginTop: "5px",
             }}
           ></TextField>
-          <Button variant="outlined" sx={{marginTop:'-2rem'}}>Change</Button>
+          <Button variant="outlined" sx={{ marginTop: "-2rem" }}>
+            Change
+          </Button>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 };

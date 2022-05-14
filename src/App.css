@@ -11,11 +11,13 @@ body {
   background-color: #f7f7f7;
 }
 
-
-#post{
+a {
+  text-decoration: none;
+}
+#post {
   width: 30rem;
 }
-#edit-bio-input{
+#edit-bio-input {
   width: 23rem;
 }
 
@@ -23,7 +25,7 @@ body {
   body {
     font-size: 75%;
   }
-  #post{
+  #post {
     width: 15rem;
   }
 }
