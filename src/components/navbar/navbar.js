@@ -201,8 +201,7 @@ export const Navbar = () => {
     <Box
       sx={{
         flexGrow: 1,
-        display:
-          pathname === "/login" || pathname === "/signup" ? "none" : "unset",
+        display: pathname === "/" || pathname === "/signup" ? "none" : "unset",
       }}
     >
       <AppBar position="static">

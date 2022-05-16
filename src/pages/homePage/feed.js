@@ -2,7 +2,7 @@ import { Box, Fab } from "@mui/material";
 import { React } from "react";
 import { ModalBox, PostCard } from "../../components";
 
-export const Home = () => {
+export const Feed = () => {
   return (
     <Box>
       <Fab

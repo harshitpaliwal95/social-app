@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { Home, Login, Profile, Signup, Bookmark, Explore } from "./pages";
+import { Feed, Login, Profile, Signup, Bookmark, Explore } from "./pages";
 import { Navbar } from "./components";
 
 function App() {
@@ -9,9 +9,9 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
+        <Route path="/feed" element={<Feed />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/explore" element={<Explore />} />
