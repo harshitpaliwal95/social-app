@@ -3,25 +3,14 @@ import { ModalBox, PostCard } from "../../components";
 
 export const Profile = () => {
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        marginTop: "3rem",
-        left: "0",
-        right: "0",
-        marginLeft: { md: "auto", xs: "4rem" },
-        marginRight: "auto",
-        width: "40rem",
-        zIndex: "-11",
-      }}
-    >
+    <Box>
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
           width: "100%",
-          margin: ".5rem",
+          marginTop: "1rem",
         }}
       >
         <Avatar
@@ -36,7 +25,7 @@ export const Profile = () => {
           @harshitpaliwal
         </Typography>
         <Typography>3 post | 30 Followers</Typography>
-        <Typography mt={4} sx={{ textAlign: "center" }}>
+        <Typography mt={4} sx={{ maxWidth: "50ch", textAlign: "center" }}>
           I'm a developer skilled in JavaScript, React, and Web technologies. I
           like to ideate and build products by leveraging my problem-solving &
           programming skills.
@@ -46,7 +35,7 @@ export const Profile = () => {
           inputText="Edit Bio"
           modalFor="editProfile"
         />
-        <Box sx={{ width: "100%" }}>
+        <Box>
           <Typography variant="h6" mt={4}>
             Your post
           </Typography>
