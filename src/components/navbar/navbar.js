@@ -17,6 +17,7 @@ export const Navbar = () => {
               : "visible",
           padding: { md: ".8rem 3rem", xs: ".4rem 1rem" },
           justifyContent: "space-between",
+          alignItems: "center",
           backgroundColor: "#ffff",
         }}
       >
@@ -34,7 +35,6 @@ export const Navbar = () => {
               variant="subtitle1"
               sx={{
                 marginLeft: ".5rem",
-                disableUnderline: true,
                 display: {
                   md: "unset",
                   xs: "none",
@@ -45,6 +45,7 @@ export const Navbar = () => {
             </Typography>
           </Box>
         </Link>
+
         <Box>
           <TextField
             id="standard-basic"

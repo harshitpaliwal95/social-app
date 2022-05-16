@@ -13,7 +13,7 @@ export const Home = () => {
         marginLeft: { md: "auto", xs: "4rem" },
         marginRight: "auto",
         width: "40rem",
-        zIndex:'-11'
+        zIndex: "-11",
       }}
     >
       <CreateNewPost />
