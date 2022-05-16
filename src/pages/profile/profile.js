@@ -1,12 +1,12 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import { EditProfileModel, PostCard } from "../../components";
+import { ModalBox, PostCard } from "../../components";
 
 export const Profile = () => {
   return (
     <Box
       sx={{
         position: "absolute",
-        marginTop: "4.8rem",
+        marginTop: "3rem",
         left: "0",
         right: "0",
         marginLeft: { md: "auto", xs: "4rem" },
@@ -41,7 +41,11 @@ export const Profile = () => {
           like to ideate and build products by leveraging my problem-solving &
           programming skills.
         </Typography>
-        <EditProfileModel />
+        <ModalBox
+          imgText="Upload Avtar"
+          inputText="Edit Bio"
+          modalFor="editProfile"
+        />
         <Box sx={{ width: "100%" }}>
           <Typography variant="h6" mt={4}>
             Your post
