@@ -1,22 +1,30 @@
-import { Box } from "@mui/material";
+import { Box, Fab } from "@mui/material";
 import { React } from "react";
-import { CreateNewPost, PostCard } from "../../components";
+import { ModalBox, PostCard } from "../../components";
 
 export const Home = () => {
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        marginTop: "4.8rem",
-        left: "0",
-        right: "0",
-        marginLeft: { md: "auto", xs: "4rem" },
-        marginRight: "auto",
-        width: "40rem",
-        zIndex: "-11",
-      }}
-    >
-      <CreateNewPost />
+    <Box>
+      <Fab
+        color="primary"
+        aria-label="add"
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: {
+            xs: 20,
+            md: 300,
+            xl: 400,
+          },
+        }}
+      >
+        <ModalBox
+          imgText="Upload Image"
+          inputText="Add Caption"
+          modalFor="newPost"
+        />
+      </Fab>
+
       <PostCard />
       <PostCard />
       <PostCard />
