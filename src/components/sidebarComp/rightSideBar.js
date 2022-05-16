@@ -1,6 +1,5 @@
 import { Avatar, Box, Button, Typography, Stack } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import React from "react";
 const FollowCard = () => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>

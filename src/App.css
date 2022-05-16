@@ -11,16 +11,25 @@ body {
   background-color: #f7f7f7;
 }
 
-
-#post{
+a {
+  text-decoration: none;
+  color: inherit;
+}
+#post {
   width: 30rem;
+}
+#edit-bio-input {
+  width: 23rem;
 }
 
 @media only screen and (max-width: 600px) {
   body {
     font-size: 75%;
   }
-  #post{
+  #post {
     width: 15rem;
+  }
+  #edit-bio-input {
+    width: 16rem;
   }
 }
