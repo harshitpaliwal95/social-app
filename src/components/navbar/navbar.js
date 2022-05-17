@@ -19,6 +19,8 @@ import { BookmarkBorderOutlined } from "@mui/icons-material";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { Link, useLocation } from "react-router-dom";
+import { logOut } from "../../feature/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,6 +63,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const Navbar = () => {
+  const dispatch = useDispatch();
+
   const { pathname } = useLocation();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -106,7 +110,12 @@ export const Navbar = () => {
         <Link to="profile">Profile </Link>
         <PermIdentityOutlinedIcon fontSize="small" />
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
+      <MenuItem
+        onClick={() => {
+          dispatch(logOut());
+          handleMenuClose();
+        }}
+      >
         Logout <LogoutOutlinedIcon fontSize="small" />
       </MenuItem>
     </Menu>
