@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { Feed, Login, Profile, Signup, Bookmark, Explore } from "./pages";
+import { Feed, Profile, Bookmark, Explore } from "./pages";
+import { Login, Signup } from "./feature";
 import { Navbar } from "./components";
 
 function App() {

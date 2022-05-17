@@ -11,11 +11,25 @@ import {
   LockOutlinedIcon,
   Typography,
   Container,
-} from "../../getUi";
-import { SignupHandleSubmit } from ".";
-import { Link } from "react-router-dom";
+} from "../../../getUi";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../authSlice";
 
-export const Signup = () => {
+export const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const loginHandleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const requireData = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    await dispatch(loginUser(requireData));
+    navigate("/feed");
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -31,11 +45,11 @@ export const Signup = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Log In
         </Typography>
         <Box
           component="form"
-          onSubmit={SignupHandleSubmit}
+          onSubmit={loginHandleSubmit}
           noValidate
           sx={{ mt: 1 }}
         >
@@ -44,19 +58,10 @@ export const Signup = () => {
             required
             fullWidth
             id="email"
-            label="Full Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
+            autoFocus
           />
           <TextField
             margin="normal"
@@ -78,7 +83,7 @@ export const Signup = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login In
           </Button>
           <Grid container>
             <Grid item xs>
@@ -93,7 +98,7 @@ export const Signup = () => {
               </Box>
             </Grid>
             <Grid item>
-              <Link to="/">
+              <Link to="/signup">
                 <Box
                   sx={{
                     color: "#1976d2",
@@ -101,7 +106,7 @@ export const Signup = () => {
                     textDecoration: "underline",
                   }}
                 >
-                  have an account? Login
+                  Don't have an account? Sign Up
                 </Box>
               </Link>
             </Grid>
