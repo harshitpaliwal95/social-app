@@ -1,7 +1,10 @@
 import { Avatar, Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 import { ModalBox, PostCard } from "../../components";
 
 export const Profile = () => {
+  const { auth } = useSelector((store) => store);
+
   return (
     <Box>
       <Box
@@ -14,15 +17,15 @@ export const Profile = () => {
         }}
       >
         <Avatar
-          alt="Harshit"
+          alt={auth.userName}
           src="/static/images/avatar/1.jpg"
           sx={{ width: 100, height: 100 }}
         />
-        <Typography variant="subtitle1" mt={2}>
-          Harshit Paliwal
+        <Typography variant="h5" mt={2}>
+          {auth.userName}
         </Typography>
         <Typography mt={0} sx={{ fontSize: ".7rem" }}>
-          @harshitpaliwal
+          @{auth.userName}
         </Typography>
         <Typography>3 post | 30 Followers</Typography>
         <Typography mt={4} sx={{ maxWidth: "50ch", textAlign: "center" }}>

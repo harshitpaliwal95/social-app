@@ -205,7 +205,7 @@ export const Navbar = () => {
     >
       <AppBar position="static">
         <Toolbar>
-          <Link to="/">
+          <Link to="/feed">
             <Typography
               variant="h6"
               noWrap
