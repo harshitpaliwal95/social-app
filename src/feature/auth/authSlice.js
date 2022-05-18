@@ -10,13 +10,15 @@ const initialState = {
 };
 
 export const loginUser = createAsyncThunk(
-  "auth/login",
+  "auth/loginUser",
   async (requireData, { rejectWithValue }) => {
     try {
       const { user, error } = await login(requireData);
       localStorage.setItem("userID", user.id);
       localStorage.setItem("userName", user.user_metadata.user_name);
-      rejectWithValue(error);
+      if (error) {
+        return rejectWithValue(error);
+      }
       return { user, error };
     } catch (error) {
       rejectWithValue(error);
@@ -38,17 +40,17 @@ const authSlice = createSlice({
       localStorage.removeItem("userName");
     },
   },
-  extraReducer: (builder) => {
+  extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(loginUser.fulfilled, (state, { payload }) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuth = true;
-        state.userID = payload.user.id;
-        state.userName = payload.user.user_metadata.user_name;
-        state.authError = !payload.error ? "something is wrong" : null;
+        state.userID = action.payload.user.id;
+        state.userName = action.payload.user.user_metadata.user_name;
+        state.authError = !action.payload.error ? "something is wrong" : null;
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
         state.isLoading = false;

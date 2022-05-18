@@ -1,7 +1,6 @@
 import { supabase } from "../supabaseClient";
 
 export const login = async (requireData) => {
-  console.log(requireData);
   return await supabase.auth.signIn(requireData);
 };
 

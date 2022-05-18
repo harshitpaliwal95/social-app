@@ -237,7 +237,7 @@ export const Navbar = () => {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton size="large" aria-label="explore more" color="inherit">
               <Badge badgeContent={0} color="error">
-                <Link to="explore">
+                <Link to="/explore">
                   <ExploreOutlinedIcon />
                 </Link>
               </Badge>
