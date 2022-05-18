@@ -18,11 +18,7 @@ export const Feed = () => {
           },
         }}
       >
-        <ModalBox
-          imgText="Upload Image"
-          inputText="Add Caption"
-          modalFor="newPost"
-        />
+        <ModalBox inputText="Add Caption" modalFor="newPost" />
       </Fab>
 
       <PostCard />

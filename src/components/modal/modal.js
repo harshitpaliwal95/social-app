@@ -4,25 +4,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import AddIcon from "@mui/icons-material/Add";
-
-const Input = styled("input")({
-  display: "none",
-});
-
-const UploadButtons = () => {
-  return (
-    <label htmlFor="icon-button-file">
-      <Input accept="image/*" id="icon-button-file" type="file" />
-      <IconButton color="primary" aria-label="upload picture" component="span">
-        <PhotoCamera />
-      </IconButton>
-    </label>
-  );
-};
+import { supabase } from "../../supabaseClient";
+import { useSelector } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -38,10 +22,33 @@ const style = {
   p: 2,
 };
 
-export const ModalBox = ({ imgText, inputText, modalFor }) => {
+export const ModalBox = ({ inputText, modalFor }) => {
+  const [userData, setData] = useState({
+    userName: "",
+    userBio: "",
+    userWebsite: "",
+  });
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { auth } = useSelector((store) => store);
+  console.log(auth.userID);
+
+  const updateUserInfo = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .update({
+          username: "harshit paliwal",
+        })
+        .eq("id", auth.userID);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box>
@@ -70,11 +77,29 @@ export const ModalBox = ({ imgText, inputText, modalFor }) => {
               alignItems: "center",
               margin: "10px 0",
             }}
-          >
-            <Typography>{imgText}</Typography>
-            <UploadButtons />
-          </Box>
+          ></Box>
+          {modalFor === "editProfile" && (
+            <Box>
+              <TextField
+                id="edit-bio-input"
+                label="User Name"
+                variant="outlined"
+                onChange={(e) =>
+                  setData((pre) => ({ ...pre, userName: e.target.value }))
+                }
+              />
 
+              <TextField
+                sx={{ marginTop: "1rem" }}
+                id="edit-bio-input"
+                label="Add Portfolio"
+                variant="outlined"
+                onChange={(e) =>
+                  setData((pre) => ({ ...pre, userWebsite: e.target.value }))
+                }
+              />
+            </Box>
+          )}
           <Typography id="modal-modal-title" variant="subtitle1">
             {inputText}
           </Typography>
@@ -82,6 +107,9 @@ export const ModalBox = ({ imgText, inputText, modalFor }) => {
             placeholder="Write here something cool !!!"
             id="edit-bio-input"
             multiline
+            onChange={(e) =>
+              setData((pre) => ({ ...pre, userBio: e.target.value }))
+            }
             rows={3}
             sx={{
               height: "9rem",
@@ -89,9 +117,19 @@ export const ModalBox = ({ imgText, inputText, modalFor }) => {
               marginTop: "5px",
             }}
           ></TextField>
-          <Button variant="outlined" sx={{ marginTop: "-2rem" }}>
-            {modalFor === "newPost" ? "post" : "Update"}
-          </Button>
+          {modalFor === "newPost" ? (
+            <Button variant="outlined" sx={{ marginTop: "-2rem" }}>
+              {"post"}
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={updateUserInfo}
+              sx={{ marginTop: "-2rem" }}
+            >
+              {"Update"}
+            </Button>
+          )}
         </Box>
       </Modal>
     </Box>

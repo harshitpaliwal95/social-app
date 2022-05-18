@@ -74,6 +74,7 @@ export const Login = () => {
             autoComplete="current-password"
           />
           <FormControlLabel
+            checked
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
