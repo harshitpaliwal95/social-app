@@ -11,11 +11,11 @@ import {
   LockOutlinedIcon,
   Typography,
   Container,
-} from "../../getUi";
-import { loginHandleSubmit } from ".";
+} from "../../../getUi";
+import { SignupHandleSubmit } from "../../../service/auth";
 import { Link } from "react-router-dom";
 
-export const Login = () => {
+export const Signup = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -31,11 +31,11 @@ export const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log In
+          Sign Up
         </Typography>
         <Box
           component="form"
-          onSubmit={loginHandleSubmit}
+          onSubmit={SignupHandleSubmit}
           noValidate
           sx={{ mt: 1 }}
         >
@@ -44,10 +44,19 @@ export const Login = () => {
             required
             fullWidth
             id="email"
+            label="Full Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
           />
           <TextField
             margin="normal"
@@ -69,7 +78,7 @@ export const Login = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Login In
+            Sign In
           </Button>
           <Grid container>
             <Grid item xs>
@@ -84,7 +93,7 @@ export const Login = () => {
               </Box>
             </Grid>
             <Grid item>
-              <Link to="/signup">
+              <Link to="/">
                 <Box
                   sx={{
                     color: "#1976d2",
@@ -92,7 +101,7 @@ export const Login = () => {
                     textDecoration: "underline",
                   }}
                 >
-                  Don't have an account? Sign Up
+                  have an account? Login
                 </Box>
               </Link>
             </Grid>

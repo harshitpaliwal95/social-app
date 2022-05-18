@@ -1,20 +1,50 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { Home, Login, Profile, Signup, Bookmark, Explore } from "./pages";
+import { Feed, Profile, Bookmark, Explore } from "./pages";
+import { Login, Signup } from "./feature";
 import { Navbar } from "./components";
+import { ProtectedRoute } from "./customeHooks/protectedRoute";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/bookmark" element={<Bookmark />} />
-        <Route path="/explore" element={<Explore />} />
+        <Route
+          path="/feed"
+          element={
+            <ProtectedRoute>
+              <Feed />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bookmark"
+          element={
+            <ProtectedRoute>
+              <Bookmark />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/explore"
+          element={
+            <ProtectedRoute>
+              <Explore />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
