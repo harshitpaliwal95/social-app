@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+
 import { supabase } from "../../supabaseClient";
 import { useSelector } from "react-redux";
 
@@ -22,7 +22,7 @@ const style = {
   p: 2,
 };
 
-export const ModalBox = ({ inputText, modalFor }) => {
+export const UserModalBox = () => {
   const [userData, setData] = useState({
     userName: "",
     userBio: "",
@@ -34,7 +34,6 @@ export const ModalBox = ({ inputText, modalFor }) => {
   const handleClose = () => setOpen(false);
 
   const { auth } = useSelector((store) => store);
-  console.log(auth.userID);
 
   const updateUserInfo = async () => {
     try {
@@ -52,17 +51,14 @@ export const ModalBox = ({ inputText, modalFor }) => {
 
   return (
     <Box>
-      {modalFor === "newPost" ? (
-        <AddIcon onClick={handleOpen} />
-      ) : (
-        <Button
-          onClick={handleOpen}
-          variant="outlined"
-          sx={{ marginTop: "1rem" }}
-        >
-          Edit Profile
-        </Button>
-      )}
+      <Button
+        onClick={handleOpen}
+        variant="outlined"
+        sx={{ marginTop: "1rem" }}
+      >
+        Edit Profile
+      </Button>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -78,30 +74,30 @@ export const ModalBox = ({ inputText, modalFor }) => {
               margin: "10px 0",
             }}
           ></Box>
-          {modalFor === "editProfile" && (
-            <Box>
-              <TextField
-                id="edit-bio-input"
-                label="User Name"
-                variant="outlined"
-                onChange={(e) =>
-                  setData((pre) => ({ ...pre, userName: e.target.value }))
-                }
-              />
 
-              <TextField
-                sx={{ marginTop: "1rem" }}
-                id="edit-bio-input"
-                label="Add Portfolio"
-                variant="outlined"
-                onChange={(e) =>
-                  setData((pre) => ({ ...pre, userWebsite: e.target.value }))
-                }
-              />
-            </Box>
-          )}
+          <Box>
+            <TextField
+              id="edit-bio-input"
+              label="User Name"
+              variant="outlined"
+              onChange={(e) =>
+                setData((pre) => ({ ...pre, userName: e.target.value }))
+              }
+            />
+
+            <TextField
+              sx={{ marginTop: "1rem" }}
+              id="edit-bio-input"
+              label="Add Portfolio"
+              variant="outlined"
+              onChange={(e) =>
+                setData((pre) => ({ ...pre, userWebsite: e.target.value }))
+              }
+            />
+          </Box>
+
           <Typography id="modal-modal-title" variant="subtitle1">
-            {inputText}
+            add bio
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
@@ -117,19 +113,14 @@ export const ModalBox = ({ inputText, modalFor }) => {
               marginTop: "5px",
             }}
           ></TextField>
-          {modalFor === "newPost" ? (
-            <Button variant="outlined" sx={{ marginTop: "-2rem" }}>
-              {"post"}
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              onClick={updateUserInfo}
-              sx={{ marginTop: "-2rem" }}
-            >
-              {"Update"}
-            </Button>
-          )}
+
+          <Button
+            variant="outlined"
+            onClick={updateUserInfo}
+            sx={{ marginTop: "-2rem" }}
+          >
+            {"Update"}
+          </Button>
         </Box>
       </Modal>
     </Box>

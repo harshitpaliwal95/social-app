@@ -60,12 +60,6 @@ export const PostCard = () => {
         title="User name"
         subheader="14, 2016"
       />
-      <CardMedia
-        component="img"
-        height="194"
-        image="https://i.ytimg.com/vi/od-QtYjIpLM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBkLdhtwshdKzMTjuxQ3m7RoFhYvw"
-        alt="card Img "
-      />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           This impressive paella is a perfect party dish and a fun meal to cook

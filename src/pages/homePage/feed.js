@@ -1,6 +1,6 @@
 import { Box, Fab } from "@mui/material";
 import { React } from "react";
-import { ModalBox, PostCard } from "../../components";
+import { PostCard, PostModal } from "../../components";
 
 export const Feed = () => {
   return (
@@ -18,7 +18,7 @@ export const Feed = () => {
           },
         }}
       >
-        <ModalBox inputText="Add Caption" modalFor="newPost" />
+        <PostModal inputText="Add Caption" modalFor="newPost" />
       </Fab>
 
       <PostCard />

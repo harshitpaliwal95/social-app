@@ -1,6 +1,6 @@
 import Link from "@mui/material/Link";
 import { Avatar, Typography } from "@mui/material";
-import { ModalBox } from "../../components";
+import { UserModalBox } from "../../components";
 
 export const UserInfo = ({ auth }) => {
   return (
@@ -25,7 +25,7 @@ export const UserInfo = ({ auth }) => {
       <Link href="#" underline="none" mt={1}>
         {"harshit.in"}
       </Link>
-      <ModalBox inputText="Edit Bio" modalFor="editProfile" />
+      <UserModalBox inputText="Edit Bio" modalFor="editProfile" />
     </>
   );
 };
