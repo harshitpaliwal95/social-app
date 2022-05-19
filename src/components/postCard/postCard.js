@@ -2,7 +2,6 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
@@ -15,7 +14,6 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useSelector } from "react-redux";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -29,9 +27,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export const PostCard = ({ data }) => {
-  const { profile } = useSelector((store) => store);
-
-  const { content, created_at, userId, profiles } = data;
+  const { content, created_at, profiles } = data;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
