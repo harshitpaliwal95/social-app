@@ -28,7 +28,7 @@ export const Login = () => {
       password: data.get("password"),
     };
     await dispatch(loginUser(requireData));
-    navigate("/feed");
+    navigate("/profile");
   };
   return (
     <Container component="main" maxWidth="xs">
