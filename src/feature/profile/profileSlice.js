@@ -23,7 +23,22 @@ export const userProfile = createAsyncThunk(
       if (error && status !== 406) {
         return rejectWithValue(error);
       }
+
       return { data, error };
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+export const allUserProfile = createAsyncThunk(
+  "profile/allUserProfile",
+  async (data, { rejectWithValue }) => {
+    try {
+      let { data: profiles, error } = await supabase.from(data).select("*");
+      if (error) {
+        return rejectWithValue(error);
+      }
+      return profiles;
     } catch (error) {
       rejectWithValue(error);
     }
@@ -49,6 +64,18 @@ const profileSlice = createSlice({
       .addCase(userProfile.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.authError = payload.error;
+      });
+    builder
+      .addCase(allUserProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(allUserProfile.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.allProfiles = payload;
+      })
+      .addCase(allUserProfile.rejected, (state) => {
+        state.isLoading = false;
+        state.authError = "something went wrong";
       });
   },
 });

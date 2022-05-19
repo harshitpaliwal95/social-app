@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { UserInfo } from "./userInfo";
 
 export const Profile = () => {
-  const { auth } = useSelector((store) => store);
+  const { auth, profile } = useSelector((store) => store);
 
   const dispatch = useDispatch();
 
@@ -25,14 +25,14 @@ export const Profile = () => {
           marginTop: "1rem",
         }}
       >
-        <UserInfo auth={auth} />
+        <UserInfo auth={auth} profile={profile} />
         <Box>
           <Typography variant="h6" mt={4}>
             Your post
           </Typography>
-          <PostCard />
-          <PostCard />
-          <PostCard />
+          {/* <PostCard />
+            <PostCard />
+            <PostCard /> */}
         </Box>
       </Box>
     </Box>
