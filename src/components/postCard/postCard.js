@@ -15,6 +15,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useSelector } from "react-redux";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,7 +28,10 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export const PostCard = () => {
+export const PostCard = ({ data }) => {
+  const { profile } = useSelector((store) => store);
+
+  const { content, created_at, userId, profiles } = data;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -49,7 +53,7 @@ export const PostCard = () => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            {profiles.username.charAt(0)}
           </Avatar>
         }
         action={
@@ -57,14 +61,12 @@ export const PostCard = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="User name"
-        subheader="14, 2016"
+        title={profiles.username}
+        subheader={created_at}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {content}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
