@@ -4,7 +4,7 @@ import { supabase } from "../../supabaseClient";
 const initialState = {
   isLoading: false,
   allPosts: null,
-  usePosts: null,
+  userPosts: null,
 };
 
 export const allPosts = createAsyncThunk(
@@ -36,12 +36,14 @@ export const allPosts = createAsyncThunk(
 export const userPosts = createAsyncThunk(
   "profile/userPosts",
   async (userID, { rejectWithValue }) => {
+    console.log("shoot userpost");
     try {
       let { data: posts, error } = await supabase
         .from("posts")
         .select("*")
         .ed("userId", userID);
 
+      console.log(posts);
       if (error) {
         return rejectWithValue(error);
       }
@@ -75,7 +77,7 @@ const postSlice = createSlice({
       })
       .addCase(userPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.usePosts = payload;
+        state.userPosts = payload;
       })
       .addCase(userPosts.rejected, (state, { payload }) => {
         state.isLoading = false;

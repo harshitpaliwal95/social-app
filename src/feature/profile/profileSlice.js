@@ -24,7 +24,7 @@ export const userProfile = createAsyncThunk(
         return rejectWithValue(error);
       }
 
-      return { data, error };
+      return data;
     } catch (error) {
       rejectWithValue(error);
     }
@@ -55,15 +55,16 @@ const profileSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(userProfile.fulfilled, (state, { payload }) => {
+        console.log(payload);
         state.isLoading = false;
-        state.userName = payload.data.username;
-        state.userBio = payload.data.user_bio;
-        state.userAvtar = payload.data.avatar_url;
-        state.userPortfolio = payload.data.website;
+        state.userName = payload.username;
+        state.userBio = payload.user_bio;
+        state.userAvtar = payload.avatar_url;
+        state.userPortfolio = payload.website;
       })
       .addCase(userProfile.rejected, (state, { payload }) => {
         state.isLoading = false;
-        state.authError = payload.error;
+        state.authError = payload;
       });
     builder
       .addCase(allUserProfile.pending, (state) => {

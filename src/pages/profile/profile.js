@@ -1,9 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { PostCard } from "../../components";
+
 import { userProfile } from "../../feature/profile/profileSlice";
 import { useEffect } from "react";
 import { UserInfo } from "./userInfo";
+import { userPosts } from "../../feature/posts/postSlice";
 
 export const Profile = () => {
   const { auth, profile } = useSelector((store) => store);
@@ -12,6 +13,7 @@ export const Profile = () => {
 
   useEffect(() => {
     dispatch(userProfile(auth.userID));
+    dispatch(userPosts(auth.userID));
   }, []);
 
   return (
