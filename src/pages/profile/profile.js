@@ -5,9 +5,10 @@ import { userProfile } from "../../feature/profile/profileSlice";
 import { useEffect } from "react";
 import { UserInfo } from "./userInfo";
 import { userPosts } from "../../feature/posts/postSlice";
+import { LinearLoder, PostCard } from "../../components";
 
 export const Profile = () => {
-  const { auth, profile } = useSelector((store) => store);
+  const { auth, profile, posts } = useSelector((store) => store);
 
   const dispatch = useDispatch();
 
@@ -32,9 +33,13 @@ export const Profile = () => {
           <Typography variant="h6" mt={4}>
             Your post
           </Typography>
-          {/* <PostCard />
-            <PostCard />
-            <PostCard /> */}
+          {posts.userPosts === null ? (
+            <LinearLoder />
+          ) : (
+            posts.userPosts.map((data) => (
+              <PostCard key={data.id} data={data} />
+            ))
+          )}
         </Box>
       </Box>
     </Box>

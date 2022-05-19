@@ -55,7 +55,6 @@ const profileSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(userProfile.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.isLoading = false;
         state.userName = payload.username;
         state.userBio = payload.user_bio;

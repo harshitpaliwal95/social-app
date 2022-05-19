@@ -25,7 +25,6 @@ export const allPosts = createAsyncThunk(
       if (error) {
         return rejectWithValue(error);
       }
-      console.log(posts);
       return posts;
     } catch (error) {
       rejectWithValue(error);
@@ -36,19 +35,26 @@ export const allPosts = createAsyncThunk(
 export const userPosts = createAsyncThunk(
   "profile/userPosts",
   async (userID, { rejectWithValue }) => {
-    console.log("shoot userpost");
     try {
       let { data: posts, error } = await supabase
         .from("posts")
-        .select("*")
-        .ed("userId", userID);
+        .select(
+          `
+        *,
+        profiles!posts_userId_fkey(
+           username,avatar_url
+         ),
+         likes(postId)
+        `
+        )
+        .eq("userId", userID);
 
-      console.log(posts);
       if (error) {
         return rejectWithValue(error);
       }
       return posts;
     } catch (error) {
+      console.log("error");
       rejectWithValue(error);
     }
   }
