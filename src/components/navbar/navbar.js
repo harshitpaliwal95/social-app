@@ -209,12 +209,13 @@ export const Navbar = () => {
     <Box
       sx={{
         flexGrow: 1,
-        display: pathname === "/" || pathname === "/signup" ? "none" : "unset",
+        display:
+          pathname === "/login" || pathname === "/signup" ? "none" : "unset",
       }}
     >
       <AppBar position="static">
         <Toolbar>
-          <Link to="/feed">
+          <Link to="/">
             <Typography
               variant="h6"
               noWrap

@@ -2,7 +2,6 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
@@ -27,7 +26,8 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export const PostCard = () => {
+export const PostCard = ({ data }) => {
+  const { content, created_at, profiles } = data;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -49,7 +49,7 @@ export const PostCard = () => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            {profiles.username.charAt(0)}
           </Avatar>
         }
         action={
@@ -57,20 +57,12 @@ export const PostCard = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="User name"
-        subheader="14, 2016"
-      />
-      <CardMedia
-        component="img"
-        height="194"
-        image="https://i.ytimg.com/vi/od-QtYjIpLM/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBkLdhtwshdKzMTjuxQ3m7RoFhYvw"
-        alt="card Img "
+        title={profiles.username}
+        subheader={created_at}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {content}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

@@ -4,25 +4,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import AddIcon from "@mui/icons-material/Add";
-
-const Input = styled("input")({
-  display: "none",
-});
-
-const UploadButtons = () => {
-  return (
-    <label htmlFor="icon-button-file">
-      <Input accept="image/*" id="icon-button-file" type="file" />
-      <IconButton color="primary" aria-label="upload picture" component="span">
-        <PhotoCamera />
-      </IconButton>
-    </label>
-  );
-};
+import { supabase } from "../../supabaseClient";
+import { useDispatch, useSelector } from "react-redux";
+import { allPosts } from "../../feature/posts/postSlice";
 
 const style = {
   position: "absolute",
@@ -38,24 +23,33 @@ const style = {
   p: 2,
 };
 
-export const ModalBox = ({ imgText, inputText, modalFor }) => {
+export const PostModal = () => {
+  const [content, setContent] = useState("");
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
+
+  const createPost = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .insert([{ content: content, userId: auth.userID }]);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch(allPosts("posts"));
+    }
+  };
+
   return (
     <Box>
-      {modalFor === "newPost" ? (
-        <AddIcon onClick={handleOpen} />
-      ) : (
-        <Button
-          onClick={handleOpen}
-          variant="outlined"
-          sx={{ marginTop: "1rem" }}
-        >
-          Edit Profile
-        </Button>
-      )}
+      <AddIcon onClick={handleOpen} />
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -70,18 +64,16 @@ export const ModalBox = ({ imgText, inputText, modalFor }) => {
               alignItems: "center",
               margin: "10px 0",
             }}
-          >
-            <Typography>{imgText}</Typography>
-            <UploadButtons />
-          </Box>
+          ></Box>
 
           <Typography id="modal-modal-title" variant="subtitle1">
-            {inputText}
+            Post your thought
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
             id="edit-bio-input"
             multiline
+            onChange={(e) => setContent(e.target.value)}
             rows={3}
             sx={{
               height: "9rem",
@@ -89,8 +81,13 @@ export const ModalBox = ({ imgText, inputText, modalFor }) => {
               marginTop: "5px",
             }}
           ></TextField>
-          <Button variant="outlined" sx={{ marginTop: "-2rem" }}>
-            {modalFor === "newPost" ? "post" : "Update"}
+
+          <Button
+            variant="outlined"
+            onClick={createPost}
+            sx={{ marginTop: "-2rem" }}
+          >
+            {"post"}
           </Button>
         </Box>
       </Modal>

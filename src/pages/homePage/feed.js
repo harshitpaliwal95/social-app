@@ -1,8 +1,21 @@
 import { Box, Fab } from "@mui/material";
-import { React } from "react";
-import { ModalBox, PostCard } from "../../components";
+import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LinearLoder, PostCard, PostModal } from "../../components";
+import { allPosts, userPosts } from "../../feature/posts/postSlice";
+import { allUserProfile } from "../../feature/profile/profileSlice";
 
 export const Feed = () => {
+  const { auth, posts } = useSelector((store) => store);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(allPosts());
+    dispatch(allUserProfile("profiles"));
+    dispatch(userPosts(auth.userID));
+  }, []);
+
   return (
     <Box>
       <Fab
@@ -18,17 +31,14 @@ export const Feed = () => {
           },
         }}
       >
-        <ModalBox
-          imgText="Upload Image"
-          inputText="Add Caption"
-          modalFor="newPost"
-        />
+        <PostModal inputText="Add Caption" modalFor="newPost" />
       </Fab>
 
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
+      {posts.allPosts === null ? (
+        <LinearLoder />
+      ) : (
+        posts.allPosts.map((data) => <PostCard key={data.id} data={data} />)
+      )}
     </Box>
   );
 };
