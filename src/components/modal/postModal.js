@@ -6,7 +6,8 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { supabase } from "../../supabaseClient";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { allPosts } from "../../feature/posts/postSlice";
 
 const style = {
   position: "absolute",
@@ -30,6 +31,7 @@ export const PostModal = () => {
   const handleClose = () => setOpen(false);
 
   const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
 
   const createPost = async () => {
     try {
@@ -39,6 +41,8 @@ export const PostModal = () => {
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(allPosts("posts"));
     }
   };
 

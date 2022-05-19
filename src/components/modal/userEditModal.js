@@ -6,7 +6,8 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 
 import { supabase } from "../../supabaseClient";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userProfile } from "../../feature/profile/profileSlice";
 
 const style = {
   position: "absolute",
@@ -34,18 +35,23 @@ export const UserModalBox = () => {
   const handleClose = () => setOpen(false);
 
   const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
 
   const updateUserInfo = async () => {
     try {
       const { data, error } = await supabase
         .from("profiles")
         .update({
-          username: "harshit paliwal",
+          username: userData.userName,
+          user_bio: userData.userBio,
+          website: userData.userWebsite,
         })
         .eq("id", auth.userID);
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(userProfile(auth.userID));
     }
   };
 
