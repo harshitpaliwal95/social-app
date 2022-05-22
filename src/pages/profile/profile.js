@@ -28,7 +28,7 @@ export const Profile = () => {
           marginTop: "1rem",
         }}
       >
-        <UserInfo auth={auth} profile={profile} />
+        <UserInfo />
         <Box
           sx={{
             width: {

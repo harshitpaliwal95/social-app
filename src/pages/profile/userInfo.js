@@ -1,8 +1,10 @@
 import Link from "@mui/material/Link";
 import { Avatar, Typography } from "@mui/material";
 import { UserModalBox } from "../../components";
+import { useSelector } from "react-redux";
 
-export const UserInfo = ({ auth, profile }) => {
+export const UserInfo = () => {
+  const { auth, profile, posts } = useSelector((store) => store);
   return (
     <>
       <Avatar
@@ -16,7 +18,9 @@ export const UserInfo = ({ auth, profile }) => {
       <Typography mt={0} sx={{ fontSize: ".7rem" }}>
         @{profile.userName ?? auth.userName}
       </Typography>
-      <Typography>3 post | 30 Followers</Typography>
+      <Typography>
+        {posts.userPosts ? posts.userPosts.length : null} post
+      </Typography>
       <Typography mt={2} sx={{ maxWidth: "50ch", textAlign: "center" }}>
         {profile.userBio}
       </Typography>

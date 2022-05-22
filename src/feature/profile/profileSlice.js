@@ -23,8 +23,6 @@ export const userProfile = createAsyncThunk(
       if (error && status !== 406) {
         return rejectWithValue(error);
       }
-
-      console.log(data);
       return data;
     } catch (error) {
       rejectWithValue(error);
