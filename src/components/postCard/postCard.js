@@ -14,6 +14,8 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { supabase } from "../../supabaseClient";
+import { Favorite } from "@mui/icons-material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -26,12 +28,46 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export const PostCard = ({ data }) => {
-  const { content, created_at, profiles } = data;
+export const PostCard = ({ data, authId }) => {
+  const { content, created_at, profiles, id, likes } = data;
+  // const {authId}
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const [isLikeActive, setLikeActice] = React.useState(false);
+  const [likeCount, setLikeCount] = React.useState(0);
+
+  React.useEffect(() => {
+    setLikeActice(likes.find((obj) => obj.postId === id));
+  }, [id]);
+
+  const likePost = async () => {
+    try {
+      if (!isLikeActive) {
+        const { data, error } = await supabase.from("likes").insert([
+          {
+            postId: id,
+            userId: authId,
+          },
+        ]);
+        if (data) {
+          setLikeActice(true);
+          setLikeCount(1);
+        }
+        if (error) {
+          throw error;
+        }
+      } else {
+        await supabase.from("likes").delete().eq("postId", id);
+        setLikeActice(false);
+        setLikeCount(-1);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -66,8 +102,15 @@ export const PostCard = ({ data }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteBorderOutlinedIcon />
+        <IconButton aria-label="add to favorites" onClick={likePost}>
+          {
+            // likes.find((obj) => obj.postId === id)
+            isLikeActive ? <Favorite /> : <FavoriteBorderOutlinedIcon />
+          }
+
+          <Typography sx={{ marginLeft: "3px" }}>
+            {likes.length + likeCount}
+          </Typography>
         </IconButton>
         <IconButton aria-label="add to bookmark">
           <BookmarkBorderOutlinedIcon />

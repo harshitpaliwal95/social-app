@@ -29,7 +29,14 @@ export const Profile = () => {
         }}
       >
         <UserInfo auth={auth} profile={profile} />
-        <Box>
+        <Box
+          sx={{
+            width: {
+              xs: "20rem",
+              md: "36rem",
+            },
+          }}
+        >
           <Typography variant="h6" mt={4}>
             Your post
           </Typography>
@@ -37,7 +44,7 @@ export const Profile = () => {
             <LinearLoder />
           ) : (
             posts.userPosts.map((data) => (
-              <PostCard key={data.id} data={data} />
+              <PostCard key={data.id} data={data} authId={auth.userID} />
             ))
           )}
         </Box>
