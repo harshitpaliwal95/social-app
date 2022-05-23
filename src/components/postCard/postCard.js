@@ -30,7 +30,6 @@ const ExpandMore = styled((props) => {
 
 export const PostCard = ({ data, authId }) => {
   const { content, created_at, profiles, id, likes } = data;
-  // const {authId}
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -40,8 +39,11 @@ export const PostCard = ({ data, authId }) => {
   const [isLikeActive, setLikeActice] = React.useState(false);
   const [likeCount, setLikeCount] = React.useState(0);
 
+  const postLikes = likes.find(
+    (obj) => obj.postId === id && obj.userId === authId
+  );
   React.useEffect(() => {
-    setLikeActice(likes.find((obj) => obj.postId === id));
+    setLikeActice(postLikes);
   }, [id]);
 
   const likePost = async () => {
@@ -61,7 +63,11 @@ export const PostCard = ({ data, authId }) => {
           throw error;
         }
       } else {
-        await supabase.from("likes").delete().eq("postId", id);
+        await supabase
+          .from("likes")
+          .delete()
+          .eq("postId", id)
+          .eq("userId", authId);
         setLikeActice(false);
         setLikeCount(-1);
       }
@@ -103,10 +109,7 @@ export const PostCard = ({ data, authId }) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={likePost}>
-          {
-            // likes.find((obj) => obj.postId === id)
-            isLikeActive ? <Favorite /> : <FavoriteBorderOutlinedIcon />
-          }
+          {isLikeActive ? <Favorite /> : <FavoriteBorderOutlinedIcon />}
 
           <Typography sx={{ marginLeft: "3px" }}>
             {likes.length + likeCount}

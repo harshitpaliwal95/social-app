@@ -18,7 +18,7 @@ export const allPosts = createAsyncThunk(
       profiles!posts_userId_fkey(
          username,avatar_url
        ),
-       likes(postId)
+       likes(postId,userId)
       `,
         { count: "exact" }
       );
