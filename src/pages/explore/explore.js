@@ -1,39 +1,61 @@
-import { PostCard } from "../../components";
+import { PostCard, LinearLoder } from "../../components";
 import { Box } from "@mui/system";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import { useSelector } from "react-redux";
 
 const CategoryRadioButton = () => {
   return (
-    <FormControl>
+    <FormControl sx={{ marginInline: "auto" }}>
       <RadioGroup
-        row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
       >
         <FormControlLabel value="female" control={<Radio />} label="New Post" />
         <FormControlLabel value="male" control={<Radio />} label="Older Post" />
-        <FormControlLabel value="other" control={<Radio />} label="All" />
+        <FormControlLabel
+          value="other"
+          control={<Radio />}
+          label="New connection"
+        />
       </RadioGroup>
     </FormControl>
   );
 };
 
 export const Explore = () => {
+  const { auth, posts } = useSelector((store) => store);
   return (
     <Box>
       <Box
-        sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "4rem",
+          flexDirection: "column",
+        }}
       >
-        <CategoryRadioButton />
+        <Box
+          sx={{
+            position: { xs: "unset", md: "fixed" },
+            top: "8rem",
+            left: "5rem",
+          }}
+        >
+          <CategoryRadioButton />
+        </Box>
+        <Box sx={{ widht: "40rem" }}>
+          {posts.allPosts === null ? (
+            <LinearLoder />
+          ) : (
+            posts.allPosts.map((data) => (
+              <PostCard key={data.id} data={data} authId={auth.userID} />
+            ))
+          )}
+        </Box>
       </Box>
-
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
     </Box>
   );
 };
