@@ -44,7 +44,7 @@ export const PostCard = ({ data, authId }) => {
   );
   React.useEffect(() => {
     setLikeActice(postLikes);
-  }, [id]);
+  }, [postLikes]);
 
   const likePost = async () => {
     try {
