@@ -5,12 +5,12 @@ const initialState = {
   isLoading: false,
   allPosts: null,
   userPosts: null,
+  olderPosts: null,
 };
 
 export const allPosts = createAsyncThunk(
   "posts/allPosts",
   async (_, { rejectWithValue }) => {
-    console.log("shoot allposts");
     try {
       let { data: posts, error } = await supabase.from("posts").select(
         `
@@ -44,7 +44,8 @@ export const userPosts = createAsyncThunk(
         profiles!posts_userId_fkey(
            username,avatar_url
          ),
-         likes(postId)
+         likes(postId,userId),
+         comments(comment,username)
         `
         )
         .eq("userId", userID);
@@ -71,7 +72,8 @@ const postSlice = createSlice({
       })
       .addCase(allPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.allPosts = payload.reverse();
+        state.allPosts = [...payload].reverse();
+        state.olderPosts = payload;
       })
       .addCase(allPosts.rejected, (state, { payload }) => {
         state.isLoading = false;

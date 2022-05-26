@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -30,19 +30,19 @@ const ExpandMore = styled((props) => {
 
 export const PostCard = ({ data, authId }) => {
   const { content, created_at, profiles, id, likes } = data;
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const [isLikeActive, setLikeActice] = React.useState(false);
-  const [likeCount, setLikeCount] = React.useState(0);
+  const [isLikeActive, setLikeActice] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
 
   const postLikes = likes.find(
     (obj) => obj.postId === id && obj.userId === authId
   );
-  React.useEffect(() => {
+  useEffect(() => {
     setLikeActice(postLikes);
   }, [postLikes]);
 

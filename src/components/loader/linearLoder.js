@@ -8,7 +8,7 @@ export const LinearLoder = () => {
       sx={{
         marginInline: "auto",
         width: "30rem",
-        marginTop: "5rem",
+        marginTop: "8rem",
       }}
     >
       <LinearProgress />

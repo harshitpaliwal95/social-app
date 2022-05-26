@@ -10,7 +10,9 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #f7f7f7;
 }
-
+.css-19kzrtu {
+  width: 35rem;
+}
 a {
   text-decoration: none;
   color: inherit;
@@ -31,5 +33,8 @@ a {
   }
   #edit-bio-input {
     width: 16rem;
+  }
+  .css-19kzrtu {
+    width: 25rem;
   }
 }
