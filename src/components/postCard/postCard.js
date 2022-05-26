@@ -90,7 +90,11 @@ export const PostCard = ({ data, authId }) => {
     >
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar
+            sx={{ bgcolor: red[500] }}
+            aria-label="recipe"
+            src={profiles.avatar_url}
+          >
             {profiles.username.charAt(0)}
           </Avatar>
         }

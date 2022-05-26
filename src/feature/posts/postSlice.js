@@ -8,6 +8,23 @@ const initialState = {
   olderPosts: null,
 };
 
+export const createPost = createAsyncThunk(
+  "posts/createPost",
+  async ({ content, authId }, { rejectWithValue }) => {
+    console.log(content, authId);
+    try {
+      const { error } = await supabase
+        .from("posts")
+        .insert([{ content: content, userId: authId }]);
+      if (error) {
+        rejectWithValue(error);
+      }
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
 export const allPosts = createAsyncThunk(
   "posts/allPosts",
   async (_, { rejectWithValue }) => {
@@ -85,7 +102,7 @@ const postSlice = createSlice({
       })
       .addCase(userPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.userPosts = payload;
+        state.userPosts = [...payload].reverse();
       })
       .addCase(userPosts.rejected, (state, { payload }) => {
         state.isLoading = false;

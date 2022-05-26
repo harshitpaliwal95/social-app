@@ -18,7 +18,7 @@ export const UploadButtons = ({ setAvatar }) => {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      const { data, error } = await supabase.storage
+      const { data } = await supabase.storage
         .from("avatars")
         .upload(filePath, file);
 

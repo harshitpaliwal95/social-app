@@ -43,7 +43,7 @@ export const UserModalBox = () => {
 
   const updateUserInfo = async () => {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("profiles")
         .update({
           username: userData.userName ?? profile.userName,
