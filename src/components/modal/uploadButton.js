@@ -31,7 +31,6 @@ export const UploadButtons = ({ setAvatar }) => {
         if (error) {
           throw error;
         }
-        console.log(data);
       }
     } catch (error) {
       console.log(error);

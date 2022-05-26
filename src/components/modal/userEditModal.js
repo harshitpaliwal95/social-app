@@ -31,7 +31,6 @@ export const UserModalBox = () => {
     userWebsite: null,
   });
 
-  // console.log(URL.createObjectURL("24ebc59e-e713-479b-8eb9-b57880023bf4"));
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -52,7 +51,6 @@ export const UserModalBox = () => {
           avatar_url: avatar ?? profile.userAvtar,
         })
         .eq("id", auth.userID);
-      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
