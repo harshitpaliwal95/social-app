@@ -23,13 +23,11 @@ export const UploadButtons = ({ setAvatar }) => {
         .upload(filePath, file);
 
       if (data) {
-        const { data, error } = await supabase.storage
+        const { publicURL, error } = supabase.storage
           .from("avatars")
-          .download(fileName);
-        setAvatar(data);
+          .getPublicUrl(fileName);
 
-        const url = URL.createObjectURL(data);
-        setAvatar(url);
+        setAvatar(publicURL);
         if (error) {
           throw error;
         }
