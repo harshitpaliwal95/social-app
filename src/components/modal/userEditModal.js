@@ -8,6 +8,7 @@ import { TextField } from "@mui/material";
 import { supabase } from "../../supabaseClient";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../feature/profile/profileSlice";
+import { UploadButtons } from "./uploadButton";
 
 const style = {
   position: "absolute",
@@ -25,26 +26,30 @@ const style = {
 
 export const UserModalBox = () => {
   const [userData, setData] = useState({
-    userName: "",
-    userBio: "",
-    userWebsite: "",
+    userName: null,
+    userBio: null,
+    userWebsite: null,
   });
 
+  // console.log(URL.createObjectURL("24ebc59e-e713-479b-8eb9-b57880023bf4"));
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { auth } = useSelector((store) => store);
+  const { auth, profile } = useSelector((store) => store);
   const dispatch = useDispatch();
+
+  const [avatar, setAvatar] = useState(null);
 
   const updateUserInfo = async () => {
     try {
       const { data, error } = await supabase
         .from("profiles")
         .update({
-          username: userData.userName,
-          user_bio: userData.userBio,
-          website: userData.userWebsite,
+          username: userData.userName ?? profile.userName,
+          user_bio: userData.userBio ?? profile.userBio,
+          website: userData.userWebsite ?? profile.userPortfolio,
+          avatar_url: avatar ?? profile.userAvtar,
         })
         .eq("id", auth.userID);
       console.log(data);
@@ -80,7 +85,7 @@ export const UserModalBox = () => {
               margin: "10px 0",
             }}
           ></Box>
-
+          <UploadButtons setAvatar={setAvatar} />
           <Box>
             <TextField
               id="edit-bio-input"
