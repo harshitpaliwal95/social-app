@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const allPosts = createAsyncThunk(
-  "profile/allPosts",
+  "posts/allPosts",
   async (_, { rejectWithValue }) => {
     console.log("shoot allposts");
     try {
@@ -18,7 +18,7 @@ export const allPosts = createAsyncThunk(
       profiles!posts_userId_fkey(
          username,avatar_url
        ),
-       likes(postId)
+       likes(postId,userId)
       `,
         { count: "exact" }
       );
@@ -33,7 +33,7 @@ export const allPosts = createAsyncThunk(
 );
 
 export const userPosts = createAsyncThunk(
-  "profile/userPosts",
+  "posts/userPosts",
   async (userID, { rejectWithValue }) => {
     try {
       let { data: posts, error } = await supabase

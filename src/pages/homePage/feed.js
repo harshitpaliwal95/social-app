@@ -37,7 +37,9 @@ export const Feed = () => {
       {posts.allPosts === null ? (
         <LinearLoder />
       ) : (
-        posts.allPosts.map((data) => <PostCard key={data.id} data={data} />)
+        posts.allPosts.map((data) => (
+          <PostCard key={data.id} data={data} authId={auth.userID} />
+        ))
       )}
     </Box>
   );

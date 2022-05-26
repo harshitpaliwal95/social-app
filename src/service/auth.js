@@ -8,7 +8,7 @@ export const SignupHandleSubmit = async (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   try {
-    await supabase.auth.signUp(
+    const { user } = await supabase.auth.signUp(
       {
         email: data.get("email"),
         password: data.get("password"),
@@ -19,6 +19,15 @@ export const SignupHandleSubmit = async (event) => {
         },
       }
     );
+    await supabase.from("profiles").insert([
+      {
+        id: user.id,
+        username: data.get("name"),
+        avatar_url: null,
+        website: null,
+        user_bio: null,
+      },
+    ]);
   } catch (error) {
     console.error("something went wrong", error);
   } finally {
