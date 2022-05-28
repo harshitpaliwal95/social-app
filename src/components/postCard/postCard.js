@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -8,7 +8,7 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import ShareIcon from "@mui/icons-material/Share";
@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { supabase } from "../../supabaseClient";
 import { Favorite } from "@mui/icons-material";
+import { Box, Button, Input } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,19 +31,19 @@ const ExpandMore = styled((props) => {
 
 export const PostCard = ({ data, authId }) => {
   const { content, created_at, profiles, id, likes } = data;
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const [isLikeActive, setLikeActice] = React.useState(false);
-  const [likeCount, setLikeCount] = React.useState(0);
+  const [isLikeActive, setLikeActice] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
 
   const postLikes = likes.find(
     (obj) => obj.postId === id && obj.userId === authId
   );
-  React.useEffect(() => {
+  useEffect(() => {
     setLikeActice(postLikes);
   }, [postLikes]);
 
@@ -90,7 +91,11 @@ export const PostCard = ({ data, authId }) => {
     >
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar
+            sx={{ bgcolor: blue[500] }}
+            aria-label="recipe"
+            src={profiles.avatar_url}
+          >
             {profiles.username.charAt(0)}
           </Avatar>
         }
@@ -132,33 +137,24 @@ export const PostCard = ({ data, authId }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is
-            absorbed, 15 to 18 minutes. Reduce heat to medium-low, add reserved
-            shrimp and mussels, tucking them down into the rice, and cook again
-            without stirring, until mussels have opened and rice is just tender,
-            5 to 7 minutes more. (Discard any mussels that don&apos;t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
+          <Box sx={{ marginBottom: "2rem" }}>
+            <Input placeholder="Your opinion" id="edit-bio-input" />
+            <Button sx={{ marginLeft: "7rem" }} variant="outlined">
+              Reply
+            </Button>
+          </Box>
+          {/* comments */}
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe" src={""} />
+            <Box sx={{ marginLeft: "5px" }}>
+              <Typography sx={{ marginBottom: "-6px" }}>user name</Typography>
+              <Typography variant="caption">yes today is super cool</Typography>
+            </Box>
+          </Box>
         </CardContent>
       </Collapse>
     </Card>

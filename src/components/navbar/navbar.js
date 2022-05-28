@@ -206,79 +206,85 @@ export const Navbar = () => {
   );
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display:
-          pathname === "/login" || pathname === "/signup" ? "none" : "unset",
-      }}
-    >
-      <AppBar position="static">
-        <Toolbar>
-          <Link to="/">
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              MUI
-            </Typography>
-          </Link>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" aria-label="explore more" color="inherit">
-              <Badge badgeContent={0} color="error">
-                <Link to="/explore">
-                  <ExploreOutlinedIcon />
-                </Link>
-              </Badge>
-            </IconButton>
-            <IconButton size="large" aria-label="bookmark" color="inherit">
-              <Badge badgeContent={0} color="error">
-                <Link to="bookmark">
-                  <BookmarkBorderOutlined />
-                </Link>
-              </Badge>
-            </IconButton>
+    <Box sx={{ width: "100vw", position: "fixed", top: "0", zIndex: "111" }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display:
+            pathname === "/login" || pathname === "/signup" ? "none" : "unset",
+        }}
+      >
+        <AppBar position="static">
+          <Toolbar>
+            <Link to="/">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                MUI
+              </Typography>
+            </Link>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton
+                size="large"
+                aria-label="explore more"
+                color="inherit"
+              >
+                <Badge badgeContent={0} color="error">
+                  <Link to="/explore">
+                    <ExploreOutlinedIcon />
+                  </Link>
+                </Badge>
+              </IconButton>
+              <IconButton size="large" aria-label="bookmark" color="inherit">
+                <Badge badgeContent={0} color="error">
+                  <Link to="bookmark">
+                    <BookmarkBorderOutlined />
+                  </Link>
+                </Badge>
+              </IconButton>
 
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
     </Box>
   );
 };

@@ -5,9 +5,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { supabase } from "../../supabaseClient";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts } from "../../feature/posts/postSlice";
+import { allPosts, createPost } from "../../feature/posts/postSlice";
 
 const style = {
   position: "absolute",
@@ -33,17 +32,9 @@ export const PostModal = () => {
   const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
 
-  const createPost = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("posts")
-        .insert([{ content: content, userId: auth.userID }]);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      dispatch(allPosts("posts"));
-    }
+  const createPostHandler = async () => {
+    await dispatch(createPost({ content: content, authId: auth.userID }));
+    await dispatch(allPosts("posts"));
   };
 
   return (
@@ -84,7 +75,7 @@ export const PostModal = () => {
 
           <Button
             variant="outlined"
-            onClick={createPost}
+            onClick={createPostHandler}
             sx={{ marginTop: "-2rem" }}
           >
             {"post"}

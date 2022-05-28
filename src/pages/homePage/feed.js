@@ -17,7 +17,7 @@ export const Feed = () => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{ marginTop: "4.6rem" }}>
       <Fab
         color="primary"
         aria-label="add"

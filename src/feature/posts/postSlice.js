@@ -5,12 +5,29 @@ const initialState = {
   isLoading: false,
   allPosts: null,
   userPosts: null,
+  olderPosts: null,
 };
+
+export const createPost = createAsyncThunk(
+  "posts/createPost",
+  async ({ content, authId }, { rejectWithValue }) => {
+    console.log(content, authId);
+    try {
+      const { error } = await supabase
+        .from("posts")
+        .insert([{ content: content, userId: authId }]);
+      if (error) {
+        rejectWithValue(error);
+      }
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
 
 export const allPosts = createAsyncThunk(
   "posts/allPosts",
   async (_, { rejectWithValue }) => {
-    console.log("shoot allposts");
     try {
       let { data: posts, error } = await supabase.from("posts").select(
         `
@@ -44,7 +61,8 @@ export const userPosts = createAsyncThunk(
         profiles!posts_userId_fkey(
            username,avatar_url
          ),
-         likes(postId)
+         likes(postId,userId),
+         comments(comment,username)
         `
         )
         .eq("userId", userID);
@@ -71,7 +89,8 @@ const postSlice = createSlice({
       })
       .addCase(allPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.allPosts = payload.reverse();
+        state.allPosts = [...payload].reverse();
+        state.olderPosts = payload;
       })
       .addCase(allPosts.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -83,7 +102,7 @@ const postSlice = createSlice({
       })
       .addCase(userPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.userPosts = payload;
+        state.userPosts = [...payload].reverse();
       })
       .addCase(userPosts.rejected, (state, { payload }) => {
         state.isLoading = false;

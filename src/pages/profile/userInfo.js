@@ -9,7 +9,7 @@ export const UserInfo = () => {
     <>
       <Avatar
         alt={profile.userName ?? auth.userName}
-        src="/static/images/avatar/1.jpg"
+        src={profile.userAvtar}
         sx={{ width: 100, height: 100 }}
       />
       <Typography variant="h5" mt={2}>

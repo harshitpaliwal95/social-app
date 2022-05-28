@@ -30,6 +30,15 @@ export const Login = () => {
     await dispatch(loginUser(requireData));
     navigate("/profile");
   };
+
+  const guestHandler = async () => {
+    const requireData = {
+      email: "harshit@gmail.com",
+      password: "123456",
+    };
+    await dispatch(loginUser(requireData));
+    navigate("/profile");
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -82,9 +91,17 @@ export const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           >
             Login In
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 0, mb: 2 }}
+            onClick={guestHandler}
+          >
+            Login As Guest
           </Button>
           <Grid container>
             <Grid item xs>

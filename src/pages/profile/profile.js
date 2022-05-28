@@ -25,7 +25,7 @@ export const Profile = () => {
           alignItems: "center",
           flexDirection: "column",
           width: "100%",
-          marginTop: "1rem",
+          marginTop: "4.6rem",
         }}
       >
         <UserInfo />

@@ -7,7 +7,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-export const UploadButtons = ({ setActarUploading }) => {
+export const UploadButtons = ({ setAvatar }) => {
   const uploadAvatar = async (event) => {
     try {
       if (!event.target.files || event.target.files.length === 0) {
@@ -18,20 +18,22 @@ export const UploadButtons = ({ setActarUploading }) => {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      const { data, error } = await supabase.storage
+      const { data } = await supabase.storage
         .from("avatars")
         .upload(filePath, file);
 
-      const response = await supabase.storage
-        .from("avatars")
-        .download(data.Key);
-      if (error) {
-        throw error;
+      if (data) {
+        const { publicURL, error } = supabase.storage
+          .from("avatars")
+          .getPublicUrl(fileName);
+
+        setAvatar(publicURL);
+        if (error) {
+          throw error;
+        }
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setActarUploading(true);
     }
   };
 
