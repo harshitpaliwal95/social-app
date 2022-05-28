@@ -25,9 +25,36 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const commentPost = createAsyncThunk(
+  "posts/commentPost",
+  async (
+    { userId, postId, comment, username, avatarUrl },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data, error } = await supabase.from("comments").insert([
+        {
+          userId: userId,
+          postId: postId,
+          comment: comment,
+          username: username,
+          avatar_url: avatarUrl,
+        },
+      ]);
+      if (error) {
+        rejectWithValue(error);
+      }
+      console.log(data);
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
 export const allPosts = createAsyncThunk(
   "posts/allPosts",
   async (_, { rejectWithValue }) => {
+    console.log("worked");
     try {
       let { data: posts, error } = await supabase.from("posts").select(
         `
@@ -35,7 +62,8 @@ export const allPosts = createAsyncThunk(
       profiles!posts_userId_fkey(
          username,avatar_url
        ),
-       likes(postId,userId)
+       likes(postId,userId),
+       comments(comment,username,avatar_url)
       `,
         { count: "exact" }
       );
@@ -62,7 +90,7 @@ export const userPosts = createAsyncThunk(
            username,avatar_url
          ),
          likes(postId,userId),
-         comments(comment,username)
+         comments(comment,username,avatar_url)
         `
         )
         .eq("userId", userID);
