@@ -3,7 +3,10 @@ import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinearLoder, PostCard, PostModal } from "../../components";
 import { allPosts, userPosts } from "../../feature/posts/postSlice";
-import { allUserProfile } from "../../feature/profile/profileSlice";
+import {
+  allUserProfile,
+  userProfile,
+} from "../../feature/profile/profileSlice";
 
 export const Feed = () => {
   const { auth, posts } = useSelector((store) => store);
@@ -13,6 +16,7 @@ export const Feed = () => {
   useEffect(() => {
     dispatch(allPosts());
     dispatch(allUserProfile("profiles"));
+    dispatch(userProfile(auth.userID));
     dispatch(userPosts(auth.userID));
   }, []);
 
