@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { supabase } from "../../supabaseClient";
 
 const initialState = {
@@ -11,11 +12,30 @@ const initialState = {
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async ({ content, authId }, { rejectWithValue }) => {
-    console.log(content, authId);
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("posts")
         .insert([{ content: content, userId: authId }]);
+      if (error) {
+        rejectWithValue(error);
+      }
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const commentPost = createAsyncThunk(
+  "posts/commentPost",
+  async ({ userId, postId, comment }, { rejectWithValue }) => {
+    try {
+      const { data, error } = await supabase.from("comments").insert([
+        {
+          userId: userId,
+          postId: postId,
+          comment: comment,
+        },
+      ]);
       if (error) {
         rejectWithValue(error);
       }
@@ -35,7 +55,10 @@ export const allPosts = createAsyncThunk(
       profiles!posts_userId_fkey(
          username,avatar_url
        ),
-       likes(postId,userId)
+       likes(postId,userId),
+       comments(comment,comment_id,
+        profiles(avatar_url,username)
+        )
       `,
         { count: "exact" }
       );
@@ -62,7 +85,9 @@ export const userPosts = createAsyncThunk(
            username,avatar_url
          ),
          likes(postId,userId),
-         comments(comment,username)
+         comments(comment,comment_id,
+          profiles(avatar_url,username)
+          )
         `
         )
         .eq("userId", userID);

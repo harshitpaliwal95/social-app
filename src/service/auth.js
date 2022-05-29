@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { supabase } from "../supabaseClient";
 
 export const login = async (requireData) => {
@@ -29,8 +30,6 @@ export const SignupHandleSubmit = async (event) => {
       },
     ]);
   } catch (error) {
-    console.error("something went wrong", error);
-  } finally {
-    console.log("all went well");
+    toast.error("something went wrong try later!");
   }
 };

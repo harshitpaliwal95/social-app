@@ -9,6 +9,7 @@ import { supabase } from "../../supabaseClient";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../feature/profile/profileSlice";
 import { UploadButtons } from "./uploadButton";
+import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -51,10 +52,13 @@ export const UserModalBox = () => {
           avatar_url: avatar ?? profile.userAvtar,
         })
         .eq("id", auth.userID);
+      if (data) {
+        toast.success("Profile updated 🥳");
+        dispatch(userProfile(auth.userID));
+      }
     } catch (error) {
+      toast.success("Unable to update profile!");
       console.log(error);
-    } finally {
-      dispatch(userProfile(auth.userID));
     }
   };
 

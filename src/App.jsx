@@ -5,10 +5,22 @@ import { Feed, Profile, Bookmark, Explore } from "./pages";
 import { Login, Signup } from "./feature";
 import { Navbar } from "./components";
 import { ProtectedRoute } from "./customeHooks/protectedRoute";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { login } from "../../service/auth";
 
 const initialState = {
@@ -19,8 +20,13 @@ export const loginUser = createAsyncThunk(
       if (error) {
         return rejectWithValue(error);
       }
+      if (user) {
+        toast.success("login successfull!");
+      }
+
       return { user, error };
     } catch (error) {
+      toast.error("login failed try again!");
       rejectWithValue(error);
     }
   }

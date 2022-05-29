@@ -1,6 +1,8 @@
+@import "react-toastify/dist/ReactToastify.css";
 :root {
   --gray-color: #242d34;
 }
+
 * {
   border: 0;
   margin: 0;

@@ -44,7 +44,7 @@ export function BasicTabs() {
   const [value, setValue] = useState(0);
   const { auth, posts } = useSelector((store) => store);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
 
@@ -89,7 +89,7 @@ export function BasicTabs() {
         )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        tab three
       </TabPanel>
     </Box>
   );

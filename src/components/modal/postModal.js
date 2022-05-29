@@ -7,6 +7,7 @@ import { TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { allPosts, createPost } from "../../feature/posts/postSlice";
+import { CircularLoader } from "../../customeHooks/circularLoader";
 
 const style = {
   position: "absolute",
@@ -26,6 +27,7 @@ export const PostModal = () => {
   const [content, setContent] = useState("");
 
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -33,8 +35,13 @@ export const PostModal = () => {
   const dispatch = useDispatch();
 
   const createPostHandler = async () => {
+    setLoading(true);
     await dispatch(createPost({ content: content, authId: auth.userID }));
     await dispatch(allPosts("posts"));
+    setLoading(false);
+    setTimeout(() => {
+      setOpen(false);
+    }, 500);
   };
 
   return (
@@ -78,7 +85,7 @@ export const PostModal = () => {
             onClick={createPostHandler}
             sx={{ marginTop: "-2rem" }}
           >
-            {"post"}
+            <CircularLoader loading={loading} text={"post"} />
           </Button>
         </Box>
       </Modal>

@@ -17,6 +17,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { supabase } from "../../supabaseClient";
 import { Favorite } from "@mui/icons-material";
 import { Box, Button, Input } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  allPosts,
+  commentPost,
+  userPosts,
+} from "../../feature/posts/postSlice";
+import { Comments } from "./comments";
+import { CircularLoader } from "../../customeHooks/circularLoader";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,15 +38,17 @@ const ExpandMore = styled((props) => {
 }));
 
 export const PostCard = ({ data, authId }) => {
-  const { content, created_at, profiles, id, likes } = data;
+  const { content, created_at, profiles, id, likes, comments } = data;
+
   const [expanded, setExpanded] = useState(false);
+  const [isLikeActive, setLikeActice] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [commentText, setCommentText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const [isLikeActive, setLikeActice] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
 
   const postLikes = likes.find(
     (obj) => obj.postId === id && obj.userId === authId
@@ -46,6 +56,23 @@ export const PostCard = ({ data, authId }) => {
   useEffect(() => {
     setLikeActice(postLikes);
   }, [postLikes]);
+
+  const dispatch = useDispatch();
+  const { profile } = useSelector((store) => store);
+
+  const commentHandler = async () => {
+    setLoading(true);
+    await dispatch(
+      commentPost({
+        userId: authId,
+        postId: id,
+        comment: commentText,
+      })
+    );
+    await dispatch(allPosts());
+    await dispatch(userPosts(authId));
+    setLoading(false);
+  };
 
   const likePost = async () => {
     try {
@@ -70,7 +97,7 @@ export const PostCard = ({ data, authId }) => {
           .eq("postId", id)
           .eq("userId", authId);
         setLikeActice(false);
-        setLikeCount(-1);
+        setLikeCount((pre) => (pre === 1 ? 0 : -1));
       }
     } catch (error) {
       console.log(error);
@@ -138,23 +165,33 @@ export const PostCard = ({ data, authId }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Box sx={{ marginBottom: "2rem" }}>
-            <Input placeholder="Your opinion" id="edit-bio-input" />
-            <Button sx={{ marginLeft: "7rem" }} variant="outlined">
-              Reply
+            <Input
+              placeholder="Your opinion"
+              id="edit-bio-input"
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+            <Button
+              sx={{ marginLeft: "7rem" }}
+              variant="outlined"
+              onClick={commentHandler}
+              disabled={loading}
+            >
+              <CircularLoader loading={loading} text={"Reply"} />
             </Button>
           </Box>
           {/* comments */}
-          <Box
-            sx={{
-              display: "flex",
-            }}
-          >
-            <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe" src={""} />
-            <Box sx={{ marginLeft: "5px" }}>
-              <Typography sx={{ marginBottom: "-6px" }}>user name</Typography>
-              <Typography variant="caption">yes today is super cool</Typography>
-            </Box>
-          </Box>
+          {comments.length !== 0 ? (
+            comments.map((item) => (
+              <Comments
+                key={item.comment_id}
+                username={item.profiles.username}
+                avatartUrl={item.profiles.avatar_url}
+                comment={item.comment}
+              />
+            ))
+          ) : (
+            <Typography>No comments yet</Typography>
+          )}
         </CardContent>
       </Collapse>
     </Card>
