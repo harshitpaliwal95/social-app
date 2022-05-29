@@ -20,6 +20,7 @@ import { Box, Button, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { allPosts, commentPost } from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
+import { CircularLoader } from "../../customeHooks/circularLoader";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -39,6 +40,7 @@ export const PostCard = ({ data, authId }) => {
   const [isLikeActive, setLikeActice] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [commentText, setCommentText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -55,6 +57,7 @@ export const PostCard = ({ data, authId }) => {
   const { profile } = useSelector((store) => store);
 
   const commentHandler = async () => {
+    setLoading(true);
     await dispatch(
       commentPost({
         userId: authId,
@@ -65,6 +68,7 @@ export const PostCard = ({ data, authId }) => {
       })
     );
     await dispatch(allPosts());
+    setLoading(false);
   };
 
   const likePost = async () => {
@@ -167,8 +171,9 @@ export const PostCard = ({ data, authId }) => {
               sx={{ marginLeft: "7rem" }}
               variant="outlined"
               onClick={commentHandler}
+              disabled={loading}
             >
-              Reply
+              <CircularLoader loading={loading} text={"Reply"} />
             </Button>
           </Box>
           {/* comments */}
