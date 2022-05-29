@@ -94,7 +94,7 @@ export const PostCard = ({ data, authId }) => {
           .eq("postId", id)
           .eq("userId", authId);
         setLikeActice(false);
-        setLikeCount(-1);
+        setLikeCount((pre) => (pre === 1 ? 0 : -1));
       }
     } catch (error) {
       console.log(error);
