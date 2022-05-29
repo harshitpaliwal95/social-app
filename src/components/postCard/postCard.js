@@ -18,7 +18,11 @@ import { supabase } from "../../supabaseClient";
 import { Favorite } from "@mui/icons-material";
 import { Box, Button, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts, commentPost } from "../../feature/posts/postSlice";
+import {
+  allPosts,
+  commentPost,
+  userPosts,
+} from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
 import { CircularLoader } from "../../customeHooks/circularLoader";
 
@@ -63,11 +67,10 @@ export const PostCard = ({ data, authId }) => {
         userId: authId,
         postId: id,
         comment: commentText,
-        username: profile.userName,
-        avatarUrl: profile.userAvtar,
       })
     );
     await dispatch(allPosts());
+    await dispatch(userPosts(authId));
     setLoading(false);
   };
 
@@ -181,8 +184,8 @@ export const PostCard = ({ data, authId }) => {
             comments.map((item) => (
               <Comments
                 key={item.comment_id}
-                username={item.username}
-                avatartUrl={item.avatar_url}
+                username={item.profiles.username}
+                avatartUrl={item.profiles.avatar_url}
                 comment={item.comment}
               />
             ))

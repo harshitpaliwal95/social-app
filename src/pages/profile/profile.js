@@ -32,7 +32,7 @@ export const Profile = () => {
           sx={{
             width: {
               xs: "20rem",
-              md: "36rem",
+              md: "40rem",
             },
           }}
         >
