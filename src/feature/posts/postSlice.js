@@ -54,7 +54,6 @@ export const commentPost = createAsyncThunk(
 export const allPosts = createAsyncThunk(
   "posts/allPosts",
   async (_, { rejectWithValue }) => {
-    console.log("worked");
     try {
       let { data: posts, error } = await supabase.from("posts").select(
         `
@@ -63,7 +62,7 @@ export const allPosts = createAsyncThunk(
          username,avatar_url
        ),
        likes(postId,userId),
-       comments(comment,username,avatar_url)
+       comments(comment,username,avatar_url,comment_id)
       `,
         { count: "exact" }
       );
