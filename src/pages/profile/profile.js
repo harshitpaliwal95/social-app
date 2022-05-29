@@ -25,6 +25,7 @@ export const Profile = () => {
           flexDirection: "column",
           width: "100%",
           marginTop: "4.6rem",
+          color: "white",
         }}
       >
         <UserInfo />

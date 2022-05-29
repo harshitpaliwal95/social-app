@@ -64,7 +64,11 @@ export const PostModal = () => {
             }}
           ></Box>
 
-          <Typography id="modal-modal-title" variant="subtitle1">
+          <Typography
+            id="modal-modal-title"
+            variant="subtitle1"
+            sx={{ color: "gray" }}
+          >
             Post your thought
           </Typography>
           <TextField

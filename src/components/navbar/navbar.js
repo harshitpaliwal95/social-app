@@ -5,14 +5,10 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import { BookmarkBorderOutlined } from "@mui/icons-material";
@@ -46,20 +42,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
 }));
 
 export const Navbar = () => {
@@ -139,66 +121,44 @@ export const Navbar = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
           <Badge badgeContent={0} color="error">
-            <AddIcon />
+            <ExploreOutlinedIcon />
           </Badge>
         </IconButton>
-        <p>Add new post</p>
-      </MenuItem>
-      <MenuItem>
-        <Link to="notification">
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={0} color="error">
-              <NotificationsOutlinedIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </Link>
-      </MenuItem>
-      <MenuItem>
         <Link to="explore">
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={0} color="error">
-              <ExploreOutlinedIcon />
-            </Badge>
-          </IconButton>
           <p>Explore</p>
         </Link>
       </MenuItem>
       <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={0} color="error">
+            <BookmarkBorderOutlined />
+          </Badge>
+        </IconButton>
         <Link to="bookmark">
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={0} color="error">
-              <BookmarkBorderOutlined />
-            </Badge>
-          </IconButton>
           <p>Bookmark</p>
         </Link>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
         <Link to="profile">
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
           <p>Profile</p>
         </Link>
       </MenuItem>
@@ -217,24 +177,11 @@ export const Navbar = () => {
         <AppBar position="static">
           <Toolbar>
             <Link to="/">
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
-              >
-                MUI
+              <Typography variant="h6" noWrap component="div" sx={{}}>
+                SOCIAL HUB
               </Typography>
             </Link>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
+
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton
