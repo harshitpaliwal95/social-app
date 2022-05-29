@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-
 import { userProfile } from "../../feature/profile/profileSlice";
 import { useEffect } from "react";
 import { UserInfo } from "./userInfo";
@@ -8,7 +7,7 @@ import { userPosts } from "../../feature/posts/postSlice";
 import { LinearLoder, PostCard } from "../../components";
 
 export const Profile = () => {
-  const { auth, profile, posts } = useSelector((store) => store);
+  const { auth, posts } = useSelector((store) => store);
 
   const dispatch = useDispatch();
 

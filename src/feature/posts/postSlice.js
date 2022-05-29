@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { supabase } from "../../supabaseClient";
 
 const initialState = {
@@ -11,9 +12,8 @@ const initialState = {
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async ({ content, authId }, { rejectWithValue }) => {
-    console.log(content, authId);
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("posts")
         .insert([{ content: content, userId: authId }]);
       if (error) {
@@ -89,7 +89,7 @@ export const userPosts = createAsyncThunk(
            username,avatar_url
          ),
          likes(postId,userId),
-         comments(comment,username,avatar_url)
+         comments(comment,username,avatar_url,comment_id)
         `
         )
         .eq("userId", userID);
