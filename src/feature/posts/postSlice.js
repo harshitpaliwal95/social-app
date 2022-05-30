@@ -85,11 +85,31 @@ export const getBookmarkPost = createAsyncThunk(
       if (error) {
         toast.error("unable to get bookmark posts!!");
       }
-      const updateBookmark = bookmark.map((item) => item.posts);
-      return updateBookmark;
+      if (bookmark) {
+        const updateBookmark = bookmark.map((item) => item.posts);
+        return updateBookmark;
+      }
     } catch (error) {
       toast.error("unable to get bookmark posts!!");
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const removeBookmark = createAsyncThunk(
+  "posts/removeBookmark",
+  async ({ postId, userId }) => {
+    try {
+      const { error } = await supabase
+        .from("bookmark")
+        .delete()
+        .eq("userId", userId)
+        .eq("postId", postId);
+      if (error) {
+        toast.error("something went wrong!!");
+      }
+    } catch (error) {
+      toast.error("something went wrong!!");
     }
   }
 );

@@ -2,7 +2,11 @@ import { Box, Fab } from "@mui/material";
 import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinearLoder, PostCard, PostModal } from "../../components";
-import { allPosts, userPosts } from "../../feature/posts/postSlice";
+import {
+  allPosts,
+  getBookmarkPost,
+  userPosts,
+} from "../../feature/posts/postSlice";
 import {
   allUserProfile,
   userProfile,
@@ -18,6 +22,7 @@ export const Feed = () => {
     dispatch(allUserProfile("profiles"));
     dispatch(userProfile(auth.userID));
     dispatch(userPosts(auth.userID));
+    dispatch(getBookmarkPost(auth.userID));
   }, []);
 
   return (

@@ -15,7 +15,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { supabase } from "../../supabaseClient";
-import { Favorite } from "@mui/icons-material";
+import { Bookmark, Favorite } from "@mui/icons-material";
 import { Box, Button, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,6 +23,7 @@ import {
   bookmarkPost,
   commentPost,
   getBookmarkPost,
+  removeBookmark,
   userPosts,
 } from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
@@ -47,6 +48,7 @@ export const PostCard = ({ data, authId }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [commentText, setCommentText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isBookmarkActive, setBookmarkAvtice] = useState(true);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -55,12 +57,18 @@ export const PostCard = ({ data, authId }) => {
   const postLikes = likes.find(
     (obj) => obj.postId === id && obj.userId === authId
   );
-  useEffect(() => {
-    setLikeActice(postLikes);
-  }, [postLikes]);
 
   const dispatch = useDispatch();
-  // const { profile } = useSelector((store) => store);
+  const { posts } = useSelector((store) => store);
+
+  let bookmarkPost;
+  if (posts.bookmark) {
+    bookmarkPost = posts.bookmark.find((item) => item.id === id);
+  }
+
+  useEffect(() => {
+    setLikeActice(postLikes);
+  }, []);
 
   const commentHandler = async () => {
     setLoading(true);
@@ -106,9 +114,14 @@ export const PostCard = ({ data, authId }) => {
     }
   };
 
-  const bookmarkHandler = () => {
-    dispatch(bookmarkPost({ postId: id, userId: authId }));
-    // dispatch(getBookmarkPost(authId));
+  const bookmarkHandler = async () => {
+    if (!bookmarkPost) {
+      await dispatch(bookmarkPost({ postId: id, userId: authId }));
+      setBookmarkAvtice(false);
+    } else {
+      await dispatch(removeBookmark({ postId: id, userId: authId }));
+    }
+    await dispatch(getBookmarkPost(authId));
   };
 
   return (
@@ -155,7 +168,11 @@ export const PostCard = ({ data, authId }) => {
           </Typography>
         </IconButton>
         <IconButton aria-label="add to bookmark" onClick={bookmarkHandler}>
-          <BookmarkBorderOutlinedIcon />
+          {bookmarkPost && isBookmarkActive ? (
+            <Bookmark />
+          ) : (
+            <BookmarkBorderOutlinedIcon />
+          )}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

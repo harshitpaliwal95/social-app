@@ -17,7 +17,7 @@ export const Bookmark = () => {
         <LinearLoder />
       ) : (
         posts.bookmark.map((data) => (
-          <PostCard key={data.postId} data={data} authId={auth.userID} />
+          <PostCard key={data.id} data={data} authId={auth.userID} />
         ))
       )}
     </Box>
