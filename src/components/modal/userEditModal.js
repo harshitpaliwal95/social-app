@@ -93,7 +93,7 @@ export const UserModalBox = () => {
           </Box>
           <Box>
             <TextField
-              id="edit-bio-input"
+              fullWidth={true}
               label="User Name"
               variant="outlined"
               onChange={(e) =>
@@ -103,7 +103,7 @@ export const UserModalBox = () => {
 
             <TextField
               sx={{ marginTop: "1rem" }}
-              id="edit-bio-input"
+              fullWidth={true}
               label="Add Portfolio"
               variant="outlined"
               onChange={(e) =>
@@ -116,7 +116,7 @@ export const UserModalBox = () => {
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
-            id="edit-bio-input"
+            fullWidth={true}
             multiline
             onChange={(e) =>
               setData((pre) => ({ ...pre, userBio: e.target.value }))

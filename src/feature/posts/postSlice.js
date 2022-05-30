@@ -188,7 +188,7 @@ const postSlice = createSlice({
       })
       .addCase(getBookmarkPost.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.bookmark = payload;
+        state.bookmark = payload.reverse();
       })
       .addCase(getBookmarkPost.rejected, (state, { payload }) => {
         state.isLoading = false;

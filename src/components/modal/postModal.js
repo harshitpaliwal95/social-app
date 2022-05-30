@@ -73,7 +73,8 @@ export const PostModal = () => {
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
-            id="edit-bio-input"
+            // id="edit-bio-input"
+            fullWidth={true}
             multiline
             onChange={(e) => setContent(e.target.value)}
             rows={3}

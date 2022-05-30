@@ -108,7 +108,7 @@ export const PostCard = ({ data, authId }) => {
 
   const bookmarkHandler = () => {
     dispatch(bookmarkPost({ postId: id, userId: authId }));
-    dispatch(getBookmarkPost(authId));
+    // dispatch(getBookmarkPost(authId));
   };
 
   return (
@@ -171,14 +171,14 @@ export const PostCard = ({ data, authId }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Box sx={{ marginBottom: "2rem" }}>
+          <Box sx={{ marginBottom: "2rem", display: "flex" }}>
             <Input
               placeholder="Your opinion"
-              id="edit-bio-input"
+              fullWidth={true}
               onChange={(e) => setCommentText(e.target.value)}
             />
             <Button
-              sx={{ marginLeft: "7rem" }}
+              sx={{ marginLeft: "2rem" }}
               variant="outlined"
               onClick={commentHandler}
               disabled={loading}
