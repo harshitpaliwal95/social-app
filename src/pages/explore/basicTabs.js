@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import { PostCard, LinearLoder } from "../../components";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
@@ -20,7 +19,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -44,7 +43,7 @@ export function BasicTabs() {
   const [value, setValue] = useState(0);
   const { auth, posts } = useSelector((store) => store);
 
-  const handleChange = (newValue) => {
+  const handleChange = (_e, newValue) => {
     setValue(newValue);
   };
 
@@ -89,7 +88,7 @@ export function BasicTabs() {
         )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        tab three
+        Item Three
       </TabPanel>
     </Box>
   );

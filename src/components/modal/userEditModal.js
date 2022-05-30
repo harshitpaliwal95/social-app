@@ -87,7 +87,10 @@ export const UserModalBox = () => {
               margin: "10px 0",
             }}
           ></Box>
-          <UploadButtons setAvatar={setAvatar} />
+          <Box mb={1} sx={{ color: "gray" }}>
+            upload avatar
+            <UploadButtons setAvatar={setAvatar} />
+          </Box>
           <Box>
             <TextField
               id="edit-bio-input"
@@ -108,7 +111,6 @@ export const UserModalBox = () => {
               }
             />
           </Box>
-
           <Typography id="modal-modal-title" variant="subtitle1">
             add bio
           </Typography>
@@ -126,7 +128,6 @@ export const UserModalBox = () => {
               marginTop: "5px",
             }}
           ></TextField>
-
           <Button
             variant="outlined"
             onClick={updateUserInfo}
