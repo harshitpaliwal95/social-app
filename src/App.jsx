@@ -4,7 +4,7 @@ import "./App.css";
 import { Feed, Profile, Bookmark, Explore } from "./pages";
 import { Login, Signup } from "./feature";
 import { Navbar } from "./components";
-import { ProtectedRoute } from "./customeHooks/protectedRoute";
+import { ProtectedRoute } from "./hooks/protectedRoute";
 import { ToastContainer } from "react-toastify";
 
 function App() {

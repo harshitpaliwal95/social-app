@@ -20,11 +20,13 @@ import { Box, Button, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   allPosts,
+  bookmarkPost,
   commentPost,
+  getBookmarkPost,
   userPosts,
 } from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
-import { CircularLoader } from "../../customeHooks/circularLoader";
+import { CircularLoader } from "../../hooks/circularLoader";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -58,7 +60,7 @@ export const PostCard = ({ data, authId }) => {
   }, [postLikes]);
 
   const dispatch = useDispatch();
-  const { profile } = useSelector((store) => store);
+  // const { profile } = useSelector((store) => store);
 
   const commentHandler = async () => {
     setLoading(true);
@@ -104,6 +106,11 @@ export const PostCard = ({ data, authId }) => {
     }
   };
 
+  const bookmarkHandler = () => {
+    dispatch(bookmarkPost({ postId: id, userId: authId }));
+    dispatch(getBookmarkPost(authId));
+  };
+
   return (
     <Card
       sx={{
@@ -147,7 +154,7 @@ export const PostCard = ({ data, authId }) => {
             {likes.length + likeCount}
           </Typography>
         </IconButton>
-        <IconButton aria-label="add to bookmark">
+        <IconButton aria-label="add to bookmark" onClick={bookmarkHandler}>
           <BookmarkBorderOutlinedIcon />
         </IconButton>
         <IconButton aria-label="share">
