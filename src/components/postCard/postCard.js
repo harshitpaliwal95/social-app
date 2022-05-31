@@ -15,16 +15,19 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { supabase } from "../../supabaseClient";
-import { Favorite } from "@mui/icons-material";
+import { Bookmark, Favorite } from "@mui/icons-material";
 import { Box, Button, Input } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   allPosts,
+  bookmarkPost,
   commentPost,
+  getBookmarkPost,
+  removeBookmark,
   userPosts,
 } from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
-import { CircularLoader } from "../../customeHooks/circularLoader";
+import { CircularLoader } from "../../hooks/circularLoader";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -38,27 +41,32 @@ const ExpandMore = styled((props) => {
 }));
 
 export const PostCard = ({ data, authId }) => {
-  const { content, created_at, profiles, id, likes, comments } = data;
+  const { content, created_at, profiles, id, likes, comments, bookmark } = data;
 
   const [expanded, setExpanded] = useState(false);
   const [isLikeActive, setLikeActice] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [commentText, setCommentText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isBookmarkActive, setBookmarkAvtice] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const postLikes = likes.find(
-    (obj) => obj.postId === id && obj.userId === authId
-  );
-  useEffect(() => {
-    setLikeActice(postLikes);
-  }, [postLikes]);
+  const findObj = (type) => {
+    return type.find((obj) => obj.postId === id && obj.userId === authId);
+  };
+
+  const postLikes = findObj(likes);
+  const isBookmark = findObj(bookmark);
 
   const dispatch = useDispatch();
-  const { profile } = useSelector((store) => store);
+
+  useEffect(() => {
+    setLikeActice(postLikes);
+    setBookmarkAvtice(isBookmark);
+  }, [postLikes, isBookmark]);
 
   const commentHandler = async () => {
     setLoading(true);
@@ -104,6 +112,17 @@ export const PostCard = ({ data, authId }) => {
     }
   };
 
+  const bookmarkHandler = async () => {
+    if (!isBookmarkActive) {
+      await dispatch(bookmarkPost({ postId: id, userId: authId }));
+      setBookmarkAvtice(true);
+    } else {
+      await dispatch(removeBookmark({ postId: id, userId: authId }));
+      setBookmarkAvtice(false);
+    }
+    await dispatch(getBookmarkPost(authId));
+  };
+
   return (
     <Card
       sx={{
@@ -147,8 +166,8 @@ export const PostCard = ({ data, authId }) => {
             {likes.length + likeCount}
           </Typography>
         </IconButton>
-        <IconButton aria-label="add to bookmark">
-          <BookmarkBorderOutlinedIcon />
+        <IconButton aria-label="add to bookmark" onClick={bookmarkHandler}>
+          {isBookmarkActive ? <Bookmark /> : <BookmarkBorderOutlinedIcon />}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
@@ -164,14 +183,14 @@ export const PostCard = ({ data, authId }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Box sx={{ marginBottom: "2rem" }}>
+          <Box sx={{ marginBottom: "2rem", display: "flex" }}>
             <Input
               placeholder="Your opinion"
-              id="edit-bio-input"
+              fullWidth={true}
               onChange={(e) => setCommentText(e.target.value)}
             />
             <Button
-              sx={{ marginLeft: "7rem" }}
+              sx={{ marginLeft: "2rem" }}
               variant="outlined"
               onClick={commentHandler}
               disabled={loading}

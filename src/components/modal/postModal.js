@@ -7,7 +7,7 @@ import { TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { allPosts, createPost } from "../../feature/posts/postSlice";
-import { CircularLoader } from "../../customeHooks/circularLoader";
+import { CircularLoader } from "../../hooks/circularLoader";
 
 const style = {
   position: "absolute",
@@ -64,12 +64,17 @@ export const PostModal = () => {
             }}
           ></Box>
 
-          <Typography id="modal-modal-title" variant="subtitle1">
+          <Typography
+            id="modal-modal-title"
+            variant="subtitle1"
+            sx={{ color: "gray" }}
+          >
             Post your thought
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
-            id="edit-bio-input"
+            // id="edit-bio-input"
+            fullWidth={true}
             multiline
             onChange={(e) => setContent(e.target.value)}
             rows={3}

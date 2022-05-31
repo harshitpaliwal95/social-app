@@ -1,13 +1,25 @@
 import { Box } from "@mui/system";
-import { PostCard } from "../../components";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LinearLoder, PostCard } from "../../components";
+import { getBookmarkPost } from "../../feature/posts/postSlice";
 
 export const Bookmark = () => {
+  const { posts, auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getBookmarkPost(auth.userID));
+  }, []);
+
   return (
-    <Box>
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
+    <Box sx={{ marginTop: "4.6rem" }}>
+      {posts.bookmark === null ? (
+        <LinearLoder />
+      ) : (
+        posts.bookmark.map((data) => (
+          <PostCard key={data.id} data={data} authId={auth.userID} />
+        ))
+      )}
     </Box>
   );
 };

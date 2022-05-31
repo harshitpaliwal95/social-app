@@ -87,10 +87,13 @@ export const UserModalBox = () => {
               margin: "10px 0",
             }}
           ></Box>
-          <UploadButtons setAvatar={setAvatar} />
+          <Box mb={1} sx={{ color: "gray" }}>
+            upload avatar
+            <UploadButtons setAvatar={setAvatar} />
+          </Box>
           <Box>
             <TextField
-              id="edit-bio-input"
+              fullWidth={true}
               label="User Name"
               variant="outlined"
               onChange={(e) =>
@@ -100,7 +103,7 @@ export const UserModalBox = () => {
 
             <TextField
               sx={{ marginTop: "1rem" }}
-              id="edit-bio-input"
+              fullWidth={true}
               label="Add Portfolio"
               variant="outlined"
               onChange={(e) =>
@@ -108,13 +111,12 @@ export const UserModalBox = () => {
               }
             />
           </Box>
-
           <Typography id="modal-modal-title" variant="subtitle1">
             add bio
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
-            id="edit-bio-input"
+            fullWidth={true}
             multiline
             onChange={(e) =>
               setData((pre) => ({ ...pre, userBio: e.target.value }))
@@ -126,7 +128,6 @@ export const UserModalBox = () => {
               marginTop: "5px",
             }}
           ></TextField>
-
           <Button
             variant="outlined"
             onClick={updateUserInfo}
