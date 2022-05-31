@@ -48,6 +48,46 @@ export const commentPost = createAsyncThunk(
   }
 );
 
+export const editPost = createAsyncThunk(
+  "posts/editPost",
+  async ({ postId, userId }) => {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .update({ content: content })
+        .eq("id", postId)
+        .eq("userId", userId);
+
+      if (error) {
+        errorToast("unable to edit Post");
+      }
+    } catch (error) {
+      errorToast("unable to edit Post");
+    }
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async ({ postId, userId }) => {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .delete()
+        .eq("id", postId)
+        .eq("userId", userId);
+      if (data) {
+        toast.info("post deleted");
+      }
+      if (error) {
+        errorToast("unable to delete post!");
+      }
+    } catch (error) {
+      errorToast("unable to delete post!");
+    }
+  }
+);
+
 export const bookmarkPost = createAsyncThunk(
   "posts/bookmarkPost",
   async ({ postId, userId }) => {
