@@ -56,6 +56,9 @@ export const bookmarkPost = createAsyncThunk(
       if (error) {
         toast.error("something went wrong try later!");
       }
+      if (data) {
+        toast.success("post saved in bookmark");
+      }
     } catch (error) {
       toast.error("something went wrong try later!");
     }
@@ -77,7 +80,8 @@ export const getBookmarkPost = createAsyncThunk(
             likes(postId,userId),
             comments(comment,comment_id,
              profiles(avatar_url,username)
-             )
+             ),
+             bookmark(postId,userId)
           )
         `
         )
@@ -127,7 +131,8 @@ export const allPosts = createAsyncThunk(
        likes(postId,userId),
        comments(comment,comment_id,
         profiles(avatar_url,username)
-        )
+        ),
+        bookmark(postId,userId)
       `,
         { count: "exact" }
       );
@@ -156,7 +161,8 @@ export const userPosts = createAsyncThunk(
          likes(postId,userId),
          comments(comment,comment_id,
           profiles(avatar_url,username)
-          )
+          ),
+          bookmark(postId,userId)
         `
         )
         .eq("userId", userID);

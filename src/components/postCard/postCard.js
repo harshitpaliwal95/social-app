@@ -41,33 +41,31 @@ const ExpandMore = styled((props) => {
 }));
 
 export const PostCard = ({ data, authId }) => {
-  const { content, created_at, profiles, id, likes, comments } = data;
+  const { content, created_at, profiles, id, likes, comments, bookmark } = data;
 
   const [expanded, setExpanded] = useState(false);
   const [isLikeActive, setLikeActice] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [commentText, setCommentText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isBookmarkActive, setBookmarkAvtice] = useState(true);
+  const [isBookmarkActive, setBookmarkAvtice] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const postLikes = likes.find(
-    (obj) => obj.postId === id && obj.userId === authId
-  );
+  const findObj = (type) => {
+    return type.find((obj) => obj.postId === id && obj.userId === authId);
+  };
+
+  const postLikes = findObj(likes);
+  const isBookmark = findObj(bookmark);
 
   const dispatch = useDispatch();
-  const { posts } = useSelector((store) => store);
-
-  let bookmarkPost;
-  if (posts.bookmark) {
-    bookmarkPost = posts.bookmark.find((item) => item.id === id);
-  }
 
   useEffect(() => {
     setLikeActice(postLikes);
+    setBookmarkAvtice(isBookmark);
   }, []);
 
   const commentHandler = async () => {
@@ -115,11 +113,12 @@ export const PostCard = ({ data, authId }) => {
   };
 
   const bookmarkHandler = async () => {
-    if (!bookmarkPost) {
+    if (!isBookmarkActive) {
       await dispatch(bookmarkPost({ postId: id, userId: authId }));
-      setBookmarkAvtice(false);
+      setBookmarkAvtice(true);
     } else {
       await dispatch(removeBookmark({ postId: id, userId: authId }));
+      setBookmarkAvtice(false);
     }
     await dispatch(getBookmarkPost(authId));
   };
@@ -168,11 +167,7 @@ export const PostCard = ({ data, authId }) => {
           </Typography>
         </IconButton>
         <IconButton aria-label="add to bookmark" onClick={bookmarkHandler}>
-          {bookmarkPost && isBookmarkActive ? (
-            <Bookmark />
-          ) : (
-            <BookmarkBorderOutlinedIcon />
-          )}
+          {isBookmarkActive ? <Bookmark /> : <BookmarkBorderOutlinedIcon />}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
