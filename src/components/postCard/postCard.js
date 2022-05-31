@@ -28,6 +28,7 @@ import {
 } from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
 import { CircularLoader } from "../../hooks/circularLoader";
+import { MenuComp } from "./menu";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -108,7 +109,7 @@ export const PostCard = ({ data, authId }) => {
         setLikeCount((pre) => (pre === 1 ? 0 : -1));
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -147,7 +148,7 @@ export const PostCard = ({ data, authId }) => {
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <MenuComp />
           </IconButton>
         }
         title={profiles.username}
