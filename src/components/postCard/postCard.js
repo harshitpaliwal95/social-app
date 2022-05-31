@@ -17,7 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { supabase } from "../../supabaseClient";
 import { Bookmark, Favorite } from "@mui/icons-material";
 import { Box, Button, Input } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   allPosts,
   bookmarkPost,
@@ -66,7 +66,7 @@ export const PostCard = ({ data, authId }) => {
   useEffect(() => {
     setLikeActice(postLikes);
     setBookmarkAvtice(isBookmark);
-  }, []);
+  }, [postLikes, isBookmark]);
 
   const commentHandler = async () => {
     setLoading(true);

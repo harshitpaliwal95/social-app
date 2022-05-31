@@ -30,7 +30,7 @@ export const commentPost = createAsyncThunk(
   "posts/commentPost",
   async ({ userId, postId, comment }, { rejectWithValue }) => {
     try {
-      const { data, error } = await supabase.from("comments").insert([
+      const { error } = await supabase.from("comments").insert([
         {
           userId: userId,
           postId: postId,
