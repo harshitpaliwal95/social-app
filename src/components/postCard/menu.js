@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useDispatch } from "react-redux";
+import { deletePost, userPosts } from "../../feature/posts/postSlice";
+import { PostModal } from "../modal/postModal";
 
-export const MenuComp = () => {
+export const MenuComp = ({ postId, userId, content }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -12,6 +14,13 @@ export const MenuComp = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const dispatch = useDispatch();
+
+  const deletePostHandler = async () => {
+    await dispatch(deletePost({ postId: postId, userId: userId }));
+    await dispatch(userPosts(userId));
   };
 
   return (
@@ -26,8 +35,10 @@ export const MenuComp = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Edit Post</MenuItem>
-        <MenuItem onClick={handleClose}>Delete Post</MenuItem>
+        <MenuItem>
+          <PostModal EditPostContent={content} postId={postId} />
+        </MenuItem>
+        <MenuItem onClick={deletePostHandler}>Delete Post</MenuItem>
       </Menu>
     </div>
   );

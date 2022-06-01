@@ -6,7 +6,12 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts, createPost } from "../../feature/posts/postSlice";
+import {
+  allPosts,
+  createPost,
+  editPost,
+  userPosts,
+} from "../../feature/posts/postSlice";
 import { CircularLoader } from "../../hooks/circularLoader";
 
 const style = {
@@ -23,8 +28,8 @@ const style = {
   p: 2,
 };
 
-export const PostModal = () => {
-  const [content, setContent] = useState("");
+export const PostModal = ({ EditPostContent, postId }) => {
+  const [content, setContent] = useState(EditPostContent);
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,9 +49,25 @@ export const PostModal = () => {
     }, 500);
   };
 
+  const editPostHandler = async () => {
+    setLoading(true);
+    await dispatch(
+      editPost({ userId: auth.userID, postId: postId, content: content })
+    );
+    await dispatch(userPosts(auth.userID));
+    setLoading(false);
+    setTimeout(() => {
+      setOpen(false);
+    }, 500);
+  };
+
   return (
     <Box>
-      <AddIcon onClick={handleOpen} />
+      {EditPostContent ? (
+        <Typography onClick={handleOpen}>Edit Post</Typography>
+      ) : (
+        <AddIcon onClick={handleOpen} />
+      )}
 
       <Modal
         open={open}
@@ -73,8 +94,8 @@ export const PostModal = () => {
           </Typography>
           <TextField
             placeholder="Write here something cool !!!"
-            // id="edit-bio-input"
             fullWidth={true}
+            value={content}
             multiline
             onChange={(e) => setContent(e.target.value)}
             rows={3}
@@ -85,13 +106,23 @@ export const PostModal = () => {
             }}
           ></TextField>
 
-          <Button
-            variant="outlined"
-            onClick={createPostHandler}
-            sx={{ marginTop: "-2rem" }}
-          >
-            <CircularLoader loading={loading} text={"post"} />
-          </Button>
+          {EditPostContent ? (
+            <Button
+              variant="outlined"
+              onClick={editPostHandler}
+              sx={{ marginTop: "-2rem" }}
+            >
+              <CircularLoader loading={loading} text={"Edit Post"} />
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={createPostHandler}
+              sx={{ marginTop: "-2rem" }}
+            >
+              <CircularLoader loading={loading} text={"post"} />
+            </Button>
+          )}
         </Box>
       </Modal>
     </Box>

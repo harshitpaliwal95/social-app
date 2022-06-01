@@ -13,7 +13,6 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { supabase } from "../../supabaseClient";
 import { Bookmark, Favorite } from "@mui/icons-material";
 import { Box, Button, Input } from "@mui/material";
@@ -148,7 +147,7 @@ export const PostCard = ({ data, authId }) => {
         }
         action={
           <IconButton aria-label="settings">
-            <MenuComp />
+            <MenuComp postId={id} userId={authId} content={content} />
           </IconButton>
         }
         title={profiles.username}
@@ -162,7 +161,6 @@ export const PostCard = ({ data, authId }) => {
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={likePost}>
           {isLikeActive ? <Favorite /> : <FavoriteBorderOutlinedIcon />}
-
           <Typography sx={{ marginLeft: "3px" }}>
             {likes.length + likeCount}
           </Typography>

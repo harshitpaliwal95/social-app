@@ -10,7 +10,7 @@ const initialState = {
   bookmark: null,
 };
 
-const errorToast = (error) => toast.error(error && "something went wrong!!!");
+const errorToast = (error) => toast.error(error ?? "something went wrong!!!");
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
@@ -50,7 +50,7 @@ export const commentPost = createAsyncThunk(
 
 export const editPost = createAsyncThunk(
   "posts/editPost",
-  async ({ postId, userId }) => {
+  async ({ postId, userId, content }) => {
     try {
       const { data, error } = await supabase
         .from("posts")
@@ -58,6 +58,9 @@ export const editPost = createAsyncThunk(
         .eq("id", postId)
         .eq("userId", userId);
 
+      if (data) {
+        toast.info("post updated 🔥");
+      }
       if (error) {
         errorToast("unable to edit Post");
       }
@@ -70,16 +73,20 @@ export const editPost = createAsyncThunk(
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
   async ({ postId, userId }) => {
+    console.log("passed data", postId, "bladadf", userId);
     try {
       const { data, error } = await supabase
         .from("posts")
         .delete()
         .eq("id", postId)
         .eq("userId", userId);
+
       if (data) {
+        console.log(data);
         toast.info("post deleted");
       }
       if (error) {
+        console.log(error);
         errorToast("unable to delete post!");
       }
     } catch (error) {
