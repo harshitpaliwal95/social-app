@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from "../../getUi";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../feature/profile/profileSlice";
 import { useEffect } from "react";

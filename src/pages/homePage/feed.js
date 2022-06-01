@@ -1,4 +1,4 @@
-import { Box, Fab } from "@mui/material";
+import { Box, Fab } from "../../getUi";
 import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinearLoder, PostCard, PostModal } from "../../components";

@@ -1,5 +1,5 @@
 import Link from "@mui/material/Link";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Typography } from "../../getUi";
 import { UserModalBox } from "../../components";
 import { useSelector } from "react-redux";
 
