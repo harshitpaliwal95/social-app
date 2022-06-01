@@ -41,8 +41,16 @@ const ExpandMore = styled((props) => {
 }));
 
 export const PostCard = ({ data, authId }) => {
-  const { content, created_at, profiles, id, likes, comments, bookmark } = data;
-
+  const {
+    content,
+    created_at,
+    profiles,
+    id,
+    userId,
+    likes,
+    comments,
+    bookmark,
+  } = data;
   const [expanded, setExpanded] = useState(false);
   const [isLikeActive, setLikeActice] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -147,7 +155,9 @@ export const PostCard = ({ data, authId }) => {
         }
         action={
           <IconButton aria-label="settings">
-            <MenuComp postId={id} userId={authId} content={content} />
+            {authId === userId && (
+              <MenuComp postId={id} userId={authId} content={content} />
+            )}
           </IconButton>
         }
         title={profiles.username}
