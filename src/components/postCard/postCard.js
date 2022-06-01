@@ -1,21 +1,27 @@
 import { useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { blue } from "@mui/material/colors";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {
+  Box,
+  Button,
+  Input,
+  styled,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  IconButton,
+  Typography,
+  blue,
+  FavoriteBorderOutlinedIcon,
+  BookmarkBorderOutlinedIcon,
+  ShareIcon,
+  ExpandMoreIcon,
+  Bookmark,
+  Favorite,
+} from "../../getUi";
+
 import { supabase } from "../../supabaseClient";
-import { Bookmark, Favorite } from "@mui/icons-material";
-import { Box, Button, Input } from "@mui/material";
 import { useDispatch } from "react-redux";
 import {
   allPosts,

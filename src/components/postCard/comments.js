@@ -1,7 +1,5 @@
 import React from "react";
-import { Box } from "@mui/system";
-import { Avatar, Typography } from "@mui/material";
-import { blue } from "@mui/material/colors";
+import { Box, Avatar, Typography, blue } from "../../getUi";
 
 export const Comments = ({ username, avatartUrl, comment }) => {
   return (

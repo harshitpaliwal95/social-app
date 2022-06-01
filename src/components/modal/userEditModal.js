@@ -1,10 +1,5 @@
+import { Box, Button, Typography, Modal, TextField } from "../../getUi";
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
-
 import { supabase } from "../../supabaseClient";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../feature/profile/profileSlice";

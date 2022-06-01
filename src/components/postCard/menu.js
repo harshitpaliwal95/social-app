@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Menu, MenuItem } from "../../getUi";
+
 import { useDispatch } from "react-redux";
 import { deletePost, userPosts } from "../../feature/posts/postSlice";
 import { PostModal } from "../modal/postModal";
