@@ -41,12 +41,11 @@ function a11yProps(index) {
 
 export function BasicTabs() {
   const [value, setValue] = useState(0);
-  const { auth, posts } = useSelector((store) => store);
+  const { auth, posts, profile } = useSelector((store) => store);
 
   const handleChange = (_e, newValue) => {
     setValue(newValue);
   };
-  const { allProfiles } = useSelector((store) => store.profile);
 
   return (
     <Box
@@ -90,9 +89,13 @@ export function BasicTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Box sx={{ width: "25rem", marginInline: "auto" }}>
-          {allProfiles &&
-            allProfiles.map((profiles) => (
-              <FollowCard key={profiles.id} profiles={profiles} />
+          {profile.allProfiles &&
+            profile.allProfiles.map((profiles) => (
+              <FollowCard
+                key={profiles.id}
+                profiles={profiles}
+                authId={auth.userID}
+              />
             ))}
         </Box>
       </TabPanel>

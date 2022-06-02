@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { supabase } from "../../supabaseClient";
 
 const initialState = {
@@ -29,19 +30,52 @@ export const userProfile = createAsyncThunk(
     }
   }
 );
+
+export const followAcc = createAsyncThunk(
+  "profile/followAcc",
+  async ({ userId, followingId }) => {
+    try {
+      const { data, error } = await supabase
+        .from("follow")
+        .insert([{ userId: userId, followingId: followingId }]);
+      console.log(data, error);
+    } catch (error) {
+      toast.error("unable to follow!!");
+    }
+  }
+);
+export const unFollowAcc = createAsyncThunk(
+  "profile/unFollowAcc",
+  async ({ userId, followingId }) => {
+    try {
+      const { data } = await supabase
+        .from("follow")
+        .delete()
+        .eq("userId", userId)
+        .eq("followingId", followingId);
+      console.log(data);
+    } catch (error) {
+      toast.error("something went wrong!!");
+    }
+  }
+);
+
 export const allUserProfile = createAsyncThunk(
   "profile/allUserProfile",
   async (authId, { rejectWithValue }) => {
     try {
       let { data: profiles, error } = await supabase
         .from("profiles")
-        .select("*");
+        .select(`*, follow!follow_followingId_fkey(userId,followingId)`)
+        .eq("follow.userId", authId);
       if (error) {
         return rejectWithValue(error);
       }
+
       const allPorfiles = profiles.filter((item) => item.id !== authId);
       return allPorfiles;
     } catch (error) {
+      console.log(error);
       rejectWithValue(error);
     }
   }
