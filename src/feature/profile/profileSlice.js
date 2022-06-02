@@ -31,13 +31,16 @@ export const userProfile = createAsyncThunk(
 );
 export const allUserProfile = createAsyncThunk(
   "profile/allUserProfile",
-  async (data, { rejectWithValue }) => {
+  async (authId, { rejectWithValue }) => {
     try {
-      let { data: profiles, error } = await supabase.from(data).select("*");
+      let { data: profiles, error } = await supabase
+        .from("profiles")
+        .select("*");
       if (error) {
         return rejectWithValue(error);
       }
-      return profiles;
+      const allPorfiles = profiles.filter((item) => item.id !== authId);
+      return allPorfiles;
     } catch (error) {
       rejectWithValue(error);
     }
@@ -70,7 +73,7 @@ const profileSlice = createSlice({
       })
       .addCase(allUserProfile.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.allProfiles = payload;
+        state.allProfiles = payload.reverse();
       })
       .addCase(allUserProfile.rejected, (state) => {
         state.isLoading = false;

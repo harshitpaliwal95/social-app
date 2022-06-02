@@ -19,11 +19,11 @@ export const Feed = () => {
 
   useEffect(() => {
     dispatch(allPosts());
-    dispatch(allUserProfile("profiles"));
+    dispatch(allUserProfile(auth.userID));
     dispatch(userProfile(auth.userID));
     dispatch(userPosts(auth.userID));
     dispatch(getBookmarkPost(auth.userID));
-  }, []);
+  }, [auth.userID]);
 
   return (
     <Box sx={{ marginTop: "4.6rem" }}>

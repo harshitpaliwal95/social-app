@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { PostCard, LinearLoder } from "../../components";
+import { PostCard, LinearLoder, FollowCard } from "../../components";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 
@@ -46,6 +46,7 @@ export function BasicTabs() {
   const handleChange = (_e, newValue) => {
     setValue(newValue);
   };
+  const { allProfiles } = useSelector((store) => store.profile);
 
   return (
     <Box
@@ -88,7 +89,12 @@ export function BasicTabs() {
         )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <Box sx={{ width: "25rem", marginInline: "auto" }}>
+          {allProfiles &&
+            allProfiles.map((profiles) => (
+              <FollowCard key={profiles.id} profiles={profiles} />
+            ))}
+        </Box>
       </TabPanel>
     </Box>
   );
