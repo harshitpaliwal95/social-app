@@ -10,25 +10,27 @@ const initialState = {
   bookmark: null,
 };
 
+const errorToast = (error) => toast.error(error ?? "something went wrong!!!");
+
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async ({ content, authId }, { rejectWithValue }) => {
+  async ({ content, authId }) => {
     try {
       const { error } = await supabase
         .from("posts")
         .insert([{ content: content, userId: authId }]);
       if (error) {
-        rejectWithValue(error);
+        errorToast("unable to create post!!");
       }
     } catch (error) {
-      rejectWithValue(error);
+      errorToast("unable to create post!!");
     }
   }
 );
 
 export const commentPost = createAsyncThunk(
   "posts/commentPost",
-  async ({ userId, postId, comment }, { rejectWithValue }) => {
+  async ({ userId, postId, comment }) => {
     try {
       const { error } = await supabase.from("comments").insert([
         {
@@ -38,10 +40,57 @@ export const commentPost = createAsyncThunk(
         },
       ]);
       if (error) {
-        rejectWithValue(error);
+        errorToast("unable to add comment!!");
       }
     } catch (error) {
-      rejectWithValue(error);
+      errorToast("unable to add comment!!");
+    }
+  }
+);
+
+export const editPost = createAsyncThunk(
+  "posts/editPost",
+  async ({ postId, userId, content }) => {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .update({ content: content })
+        .eq("id", postId)
+        .eq("userId", userId);
+
+      if (data) {
+        toast.info("post updated 🔥");
+      }
+      if (error) {
+        errorToast("unable to edit Post");
+      }
+    } catch (error) {
+      errorToast("unable to edit Post");
+    }
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async ({ postId, userId }) => {
+    console.log("passed data", postId, "bladadf", userId);
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .delete()
+        .eq("id", postId)
+        .eq("userId", userId);
+
+      if (data) {
+        console.log(data);
+        toast.info("post deleted");
+      }
+      if (error) {
+        console.log(error);
+        errorToast("unable to delete post!");
+      }
+    } catch (error) {
+      errorToast("unable to delete post!");
     }
   }
 );
@@ -54,13 +103,13 @@ export const bookmarkPost = createAsyncThunk(
         .from("bookmark")
         .insert([{ userId: userId, postId: postId }]);
       if (error) {
-        toast.error("something went wrong try later!");
+        errorToast();
       }
       if (data) {
         toast.success("post saved in bookmark");
       }
     } catch (error) {
-      toast.error("something went wrong try later!");
+      errorToast();
     }
   }
 );
@@ -87,14 +136,14 @@ export const getBookmarkPost = createAsyncThunk(
         )
         .eq("userId", authId);
       if (error) {
-        toast.error("unable to get bookmark posts!!");
+        errorToast("unable to get bookmark posts!!");
       }
       if (bookmark) {
         const updateBookmark = bookmark.map((item) => item.posts);
         return updateBookmark;
       }
     } catch (error) {
-      toast.error("unable to get bookmark posts!!");
+      errorToast("unable to get bookmark posts!!");
       return rejectWithValue(error);
     }
   }
@@ -110,10 +159,27 @@ export const removeBookmark = createAsyncThunk(
         .eq("userId", userId)
         .eq("postId", postId);
       if (error) {
-        toast.error("something went wrong!!");
+        errorToast();
       }
     } catch (error) {
-      toast.error("something went wrong!!");
+      errorToast();
+    }
+  }
+);
+
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async ({ userId, postId }) => {
+    try {
+      const { data, error } = await supabase.from("likes").insert([
+        {
+          postId: postId,
+          userId: userId,
+        },
+      ]);
+      return { data, error };
+    } catch (error) {
+      errorToast();
     }
   }
 );
@@ -137,10 +203,12 @@ export const allPosts = createAsyncThunk(
         { count: "exact" }
       );
       if (error) {
+        errorToast("unable to fetch posts");
         return rejectWithValue(error);
       }
       return posts;
     } catch (error) {
+      errorToast("unable to fetch posts");
       rejectWithValue(error);
     }
   }
@@ -168,11 +236,12 @@ export const userPosts = createAsyncThunk(
         .eq("userId", userID);
 
       if (error) {
+        errorToast("unable to fetch posts");
         return rejectWithValue(error);
       }
       return posts;
     } catch (error) {
-      console.log("error");
+      errorToast("unable to fetch posts");
       rejectWithValue(error);
     }
   }

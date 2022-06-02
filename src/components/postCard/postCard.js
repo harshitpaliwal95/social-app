@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { blue } from "@mui/material/colors";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import {
+  Box,
+  Button,
+  Input,
+  styled,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  IconButton,
+  Typography,
+  blue,
+  FavoriteBorderOutlinedIcon,
+  BookmarkBorderOutlinedIcon,
+  ShareIcon,
+  ExpandMoreIcon,
+  Bookmark,
+  Favorite,
+} from "../../getUi";
+
 import { supabase } from "../../supabaseClient";
-import { Bookmark, Favorite } from "@mui/icons-material";
-import { Box, Button, Input } from "@mui/material";
 import { useDispatch } from "react-redux";
 import {
   allPosts,
@@ -28,6 +33,7 @@ import {
 } from "../../feature/posts/postSlice";
 import { Comments } from "./comments";
 import { CircularLoader } from "../../hooks/circularLoader";
+import { MenuComp } from "./menu";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,8 +47,16 @@ const ExpandMore = styled((props) => {
 }));
 
 export const PostCard = ({ data, authId }) => {
-  const { content, created_at, profiles, id, likes, comments, bookmark } = data;
-
+  const {
+    content,
+    created_at,
+    profiles,
+    id,
+    userId,
+    likes,
+    comments,
+    bookmark,
+  } = data;
   const [expanded, setExpanded] = useState(false);
   const [isLikeActive, setLikeActice] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -108,7 +122,7 @@ export const PostCard = ({ data, authId }) => {
         setLikeCount((pre) => (pre === 1 ? 0 : -1));
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -147,7 +161,9 @@ export const PostCard = ({ data, authId }) => {
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            {authId === userId && (
+              <MenuComp postId={id} userId={authId} content={content} />
+            )}
           </IconButton>
         }
         title={profiles.username}
@@ -161,7 +177,6 @@ export const PostCard = ({ data, authId }) => {
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={likePost}>
           {isLikeActive ? <Favorite /> : <FavoriteBorderOutlinedIcon />}
-
           <Typography sx={{ marginLeft: "3px" }}>
             {likes.length + likeCount}
           </Typography>
