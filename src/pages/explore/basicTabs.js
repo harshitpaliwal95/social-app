@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { PostCard, LinearLoder } from "../../components";
+import { PostCard, LinearLoder, FollowCard } from "../../components";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 
@@ -41,7 +41,7 @@ function a11yProps(index) {
 
 export function BasicTabs() {
   const [value, setValue] = useState(0);
-  const { auth, posts } = useSelector((store) => store);
+  const { auth, posts, profile } = useSelector((store) => store);
 
   const handleChange = (_e, newValue) => {
     setValue(newValue);
@@ -88,7 +88,16 @@ export function BasicTabs() {
         )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <Box sx={{ width: "25rem", marginInline: "auto" }}>
+          {profile.allProfiles &&
+            profile.allProfiles.map((profiles) => (
+              <FollowCard
+                key={profiles.id}
+                profiles={profiles}
+                authId={auth.userID}
+              />
+            ))}
+        </Box>
       </TabPanel>
     </Box>
   );

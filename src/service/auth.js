@@ -29,6 +29,9 @@ export const SignupHandleSubmit = async (event) => {
         user_bio: null,
       },
     ]);
+    if (user) {
+      toast.success("succesfully signin 🔥");
+    }
   } catch (error) {
     toast.error("something went wrong try later!");
   }
