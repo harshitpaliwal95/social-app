@@ -1,10 +1,11 @@
 import { Box, Button, Typography, Modal, TextField } from "../../getUi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../feature/profile/profileSlice";
 import { UploadButtons } from "./uploadButton";
 import { toast } from "react-toastify";
+import { CircularLoader } from "../../hooks/circularLoader";
 
 const style = {
   position: "absolute",
@@ -21,23 +22,30 @@ const style = {
 };
 
 export const UserModalBox = () => {
-  const [userData, setData] = useState({
-    userName: null,
-    userBio: null,
-    userWebsite: null,
-  });
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [userData, setData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const { auth, profile } = useSelector((store) => store);
+
+  useEffect(() => {
+    setData((pre) => ({
+      ...pre,
+      userName: profile.userName,
+      userWebsite: profile.userPortfolio,
+      userBio: profile.userBio,
+    }));
+  }, [profile]);
+
   const dispatch = useDispatch();
 
   const [avatar, setAvatar] = useState(null);
 
   const updateUserInfo = async () => {
     try {
+      setLoading(true);
       const { data } = await supabase
         .from("profiles")
         .update({
@@ -49,7 +57,9 @@ export const UserModalBox = () => {
         .eq("id", auth.userID);
       if (data) {
         toast.success("Profile updated 🥳");
-        dispatch(userProfile(auth.userID));
+        await dispatch(userProfile(auth.userID));
+        setOpen(false);
+        setLoading(false);
       }
     } catch (error) {
       toast.success("Unable to update profile!");
@@ -91,6 +101,7 @@ export const UserModalBox = () => {
               fullWidth={true}
               label="User Name"
               variant="outlined"
+              value={userData.userName}
               onChange={(e) =>
                 setData((pre) => ({ ...pre, userName: e.target.value }))
               }
@@ -100,6 +111,7 @@ export const UserModalBox = () => {
               sx={{ marginTop: "1rem" }}
               fullWidth={true}
               label="Add Portfolio"
+              value={userData.userWebsite}
               variant="outlined"
               onChange={(e) =>
                 setData((pre) => ({ ...pre, userWebsite: e.target.value }))
@@ -113,6 +125,7 @@ export const UserModalBox = () => {
             placeholder="Write here something cool !!!"
             fullWidth={true}
             multiline
+            value={userData.userBio}
             onChange={(e) =>
               setData((pre) => ({ ...pre, userBio: e.target.value }))
             }
@@ -128,7 +141,7 @@ export const UserModalBox = () => {
             onClick={updateUserInfo}
             sx={{ marginTop: "-2rem" }}
           >
-            {"Update"}
+            <CircularLoader loading={loading} text={"post"} />
           </Button>
         </Box>
       </Modal>

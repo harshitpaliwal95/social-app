@@ -28,7 +28,7 @@ export const Login = () => {
       password: data.get("password"),
     };
     await dispatch(loginUser(requireData));
-    navigate("/profile");
+    navigate("/");
   };
 
   const guestHandler = async () => {
@@ -37,7 +37,7 @@ export const Login = () => {
       password: "123456",
     };
     await dispatch(loginUser(requireData));
-    navigate("/profile");
+    navigate("/");
   };
   return (
     <Container component="main" maxWidth="xs">
